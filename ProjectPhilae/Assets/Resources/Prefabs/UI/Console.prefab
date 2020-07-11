@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4173215564053863278
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4173215564053863280}
+  - component: {fileID: 4173215564053863279}
+  m_Layer: 0
+  m_Name: Console
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4173215564053863280
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4173215564053863278}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 736.7255, y: 425.62244, z: -279.625}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4173215564053863279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4173215564053863278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7df7090fd5bde14b97bbea2287077dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ship: {fileID: 0}
+  thrustNodePrefab: {fileID: 9218763946017225001, guid: 19a3e7292a6385d408ca20fef3e5a851,
+    type: 3}
+  waitNodePrefab: {fileID: 9218763946017225001, guid: a09b77a3bcdb31746987e0fe918990ec,
+    type: 3}
+  reverseThrustNodePrefab: {fileID: 9218763946017225001, guid: 8c878b5e6ac55e641a6a8b870a88adc0,
+    type: 3}
+  stopNodePrefab: {fileID: 9218763946017225001, guid: b908ca2a89f1816488d4717108f71c15,
+    type: 3}
+  rotateNodePrefab: {fileID: 9218763946017225001, guid: b539e72df81789e46a09b10d8adec1d7,
+    type: 3}
+  consoleCanvas: {fileID: 0}
+  configPanelPlaceholder: {fileID: 0}
+  gameManager: {fileID: 0}

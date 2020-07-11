@@ -3,8 +3,10 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManagerController : MonoBehaviour
+public class GameManagerController : Singleton<GameManagerController>
 {
+    public static GameManagerController Instance => (GameManagerController)instance;
+
     private enum GameStates
     {
         EnterInstructions,
