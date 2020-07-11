@@ -21,6 +21,12 @@ public class GameManagerController : Singleton<GameManagerController>
 
     void Start()
     {
+        Load();
+    }
+
+    private void Load()
+    {
+        state = GameStates.EnterInstructions;
         waypoints = new List<GameObject>();
         waypoints.AddRange(GameObject.FindGameObjectsWithTag("Waypoint"));
     }
@@ -43,13 +49,14 @@ public class GameManagerController : Singleton<GameManagerController>
             }
             else
             {
-                state = GameStates.Win;
+                state = GameStates.Win; 
             }
         }
 
         if(state == GameStates.Win)
         {
             SceneManager.LoadScene("Main", LoadSceneMode.Single);
+            Load();
         }
     }
 }
