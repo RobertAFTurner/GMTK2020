@@ -82,7 +82,7 @@ public class ShipController : SingletonDestructible<GameManagerController>
         if(other.gameObject.tag == "Environment")
         {
             Debug.Log("Boom - you died");
-            GameManagerController.Instance.LoadLevel();
+            GameManagerController.Instance.LoadLevel(true);
         }
     }
 }

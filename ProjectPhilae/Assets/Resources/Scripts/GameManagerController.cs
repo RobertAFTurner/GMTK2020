@@ -2,6 +2,7 @@
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class GameManagerController : Singleton<GameManagerController>
 {
@@ -17,11 +18,14 @@ public class GameManagerController : Singleton<GameManagerController>
 
     public GameStates State = GameStates.EnterInstructions;
 
+    private List<Command> prevCommands;
+
     private List<GameObject> waypoints;
     private bool allWaypointsCollected;
     private GameObject landingPad;
     private bool levelHasPad;
     private int currentLevel;
+    private bool reload = true;
 
     void Start()
     {
@@ -49,6 +53,13 @@ public class GameManagerController : Singleton<GameManagerController>
 
     void Update()
     {
+        if(reload)
+        {
+            // Because the Game Manager persists between levels we have to wait until the first frame after loading to "Start" the Game Manaager.
+            StartCoroutine(LateLoad());
+            reload = false;
+        }
+
         if (State == GameStates.Executing)
         {
             CheckForWaypoints();
@@ -59,6 +70,13 @@ public class GameManagerController : Singleton<GameManagerController>
             LoadNextLevel();
         }
     }
+
+    private IEnumerator LateLoad()
+    {
+        State = GameStates.EnterInstructions;
+        yield return new WaitForSeconds(0.25f);
+        Load();
+    } 
 
     private void CheckForWaypoints()
     {
@@ -94,15 +112,29 @@ public class GameManagerController : Singleton<GameManagerController>
         }
     }
 
-    public void LoadLevel()
+    public void LoadLevel(bool keepCommands = false)
     {
+        if (keepCommands)
+        {
+            var consoleController = GameObject.Find("Console").GetComponent<ConsoleController>();
+            prevCommands = consoleController.Commands;
+            prevCommands.ForEach(command => command.State = CommandState.Pending);
+        }
+
         SceneManager.LoadScene($"Level_{currentLevel}", LoadSceneMode.Single);
-        Load();
+        
+        // Can't just call Load here because it will not re-set the waypoints correctly.
+        reload = true;
     }
 
     private void LoadNextLevel()
     {
         currentLevel++;
         LoadLevel();
+    }
+
+    public List<Command> GetPreviousCommands() 
+    {
+        return prevCommands;
     }
 }

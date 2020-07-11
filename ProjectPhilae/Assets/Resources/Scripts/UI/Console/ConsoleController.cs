@@ -38,7 +38,8 @@ public class ConsoleController : MonoBehaviour
             [typeof(RotateCommand)] = rotateNodePrefab,
         };
 
-        Commands = new List<Command>();
+        var prevCommands = GameManagerController.Instance.GetPreviousCommands();
+        Commands = prevCommands != null ? prevCommands : new List<Command>();
         currentNodeInstance = null;
     }
 
