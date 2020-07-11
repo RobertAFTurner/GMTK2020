@@ -117,7 +117,7 @@ public class GameManagerController : Singleton<GameManagerController>
         if (keepCommands)
         {
             var consoleController = GameObject.Find("Console").GetComponent<ConsoleController>();
-            prevCommands = consoleController.CommittedCommands;
+            prevCommands = consoleController.Commands;
             prevCommands.ForEach(command => command.State = CommandState.Pending);
         }
 
