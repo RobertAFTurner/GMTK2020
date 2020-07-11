@@ -6,6 +6,9 @@ public class ConsoleController : MonoBehaviour
     [SerializeField]
     Canvas consoleCanvas;
 
+    [SerializeField]
+    GameObject thrustNode;
+
     public List<ICommand> committedCommands;
     public ICommand draftCommand;
 
@@ -27,6 +30,16 @@ public class ConsoleController : MonoBehaviour
         var draftThrustCommand = new ThrustCommand();
         draftCommand = new ThrustCommand();
         // TODO: Instantiate ThrustCommand config pannel and pass the ThrustCommand to it to work on.
+        DisplayThrustUI((ThrustCommand)draftCommand);
+    }
+
+
+    private void DisplayThrustUI(ThrustCommand command)
+    {
+        var instance = Instantiate(thrustNode, new Vector3(0, 0, -10), Quaternion.identity);
+        instance.transform.SetParent(consoleCanvas.transform);
+        instance.GetComponent<RectTransform>().anchoredPosition = new Vector3(700, -300, -10);
+        instance.GetComponent<ThrustNodeController>().SetThrustCommand(command);
     }
 
     public void AddWait()
