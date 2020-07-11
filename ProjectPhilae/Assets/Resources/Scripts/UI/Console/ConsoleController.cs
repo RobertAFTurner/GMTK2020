@@ -43,6 +43,50 @@ public class ConsoleController : MonoBehaviour
         currentNodeInstance = null;
     }
 
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+            SelectDown();
+
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+            SelectUp();
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (GameManagerController.Instance.State == GameManagerController.GameStates.EnterInstructions)
+            {
+                Execute();
+            }
+            else
+            {
+                Abort();
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Delete)) //Backspace would interfere with typing || Input.GetKeyDown(KeyCode.Backspace) 
+        {
+            RemoveCommandFromList();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Return))
+            CloseDraftCommandNode();
+
+        if (Input.GetKeyDown(KeyCode.T))
+            AddThrust();
+
+        if (Input.GetKeyDown(KeyCode.W))
+            AddWait();
+
+        if (Input.GetKeyDown(KeyCode.R))
+            AddRotate();
+
+        if (Input.GetKeyDown(KeyCode.B))
+            AddReverseThrust();
+
+        if (Input.GetKeyDown(KeyCode.S))
+            AddStop();
+    }
+
     public void CommitCommand()
     {
         selectedCommandIndex = null;
@@ -61,7 +105,7 @@ public class ConsoleController : MonoBehaviour
         }
         else if (Commands.Count > 0)
         {
-            Commands.RemoveAt(Commands.Count -1);
+            Commands.RemoveAt(Commands.Count - 1);
         }
     }
 
@@ -82,6 +126,12 @@ public class ConsoleController : MonoBehaviour
         MoveSelection(1);
     }
 
+    public void Abort()
+    {
+        ShipController.Instance.Stop();
+        GameManagerController.Instance.LoadLevel(true);
+    }
+
     private void MoveSelection(int offset)
     {
         selectedCommandIndex = selectedCommandIndex.HasValue ? selectedCommandIndex + offset : Commands.Count - 1;
@@ -97,14 +147,9 @@ public class ConsoleController : MonoBehaviour
             var command = Commands[selectedCommandIndex.Value];
             MethodInfo method = typeof(ConsoleController).GetMethod(nameof(SetDraftCommand));
             MethodInfo generic = method.MakeGenericMethod(command.GetType());
-            object[] parameters = {command, nodePrefabLookup[command.GetType()]};
+            object[] parameters = { command, nodePrefabLookup[command.GetType()] };
             generic.Invoke(this, parameters);
         }
-    }
-    
-    // Update is called once per frame
-    private void Update()
-    {
     }
 
     public void SetNewDraftCommand<T>(T draftCommand, GameObject configPrefab) where T : Command
