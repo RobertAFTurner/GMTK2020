@@ -2876,6 +2876,7 @@ MonoBehaviour:
   reverseThrustNodePrefab: {fileID: 9218763946017225001, guid: 8c878b5e6ac55e641a6a8b870a88adc0,
     type: 3}
   stopNodePrefab: {fileID: 9218763946017225001, guid: b908ca2a89f1816488d4717108f71c15,
+    type: 3}
   rotateNodePrefab: {fileID: 9218763946017225001, guid: b539e72df81789e46a09b10d8adec1d7,
     type: 3}
   consoleCanvas: {fileID: 19690866}

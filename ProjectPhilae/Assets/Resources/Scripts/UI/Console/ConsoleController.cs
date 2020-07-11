@@ -28,7 +28,7 @@ public class ConsoleController : MonoBehaviour
   public void AddWait() => SetDraftCommand(new WaitCommand(), waitNodePrefab);
   public void AddReverseThrust() => SetDraftCommand(new ReverseThrustCommand(), reverseThrustNodePrefab);
   public void AddStop() => SetDraftCommand(new StopCommand(), stopNodePrefab);
-    public void AddRotate() => (new RotateCommand(), rotateNodePrefab);
+  public void AddRotate() => SetDraftCommand(new RotateCommand(), rotateNodePrefab);
 
   public void AddCommandToList()
   {
