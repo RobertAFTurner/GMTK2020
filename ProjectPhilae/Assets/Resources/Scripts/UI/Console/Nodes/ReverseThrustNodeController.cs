@@ -4,22 +4,22 @@ using UnityEngine.UI;
 using TMPro;
 public class ReverseThrustNodeController : NodeBase<ReverseThrustCommand>
 {
-    private Slider slider;
-    private TMP_InputField input;
-    
+    private Slider powerSlider;
+    private Slider durationSlider;
+
     public void OnEnable()
     {
-        input = this.GetComponentsInChildren<TMP_InputField>().Single(c => c.name.Contains("Duration"));
-        input.onValueChanged.AddListener(SetDuration);
+        durationSlider = this.GetComponentsInChildren<Slider>().Single(c => c.name.Contains("Duration"));
+        durationSlider.onValueChanged.AddListener(SetDuration);
 
-        slider = this.GetComponentsInChildren<Slider>().Single(c => c.name.Contains("Power"));
-        slider.onValueChanged.AddListener(SetPower);
+        powerSlider = this.GetComponentsInChildren<Slider>().Single(c => c.name.Contains("Power"));
+        powerSlider.onValueChanged.AddListener(SetPower);
     }
 
     public void OnDisable()
     {
-        input.onValueChanged.RemoveAllListeners();
-        slider.onValueChanged.RemoveAllListeners();
+        durationSlider.onValueChanged.RemoveAllListeners();
+        powerSlider.onValueChanged.RemoveAllListeners();
     }
 
     private void SetPower(float power)
@@ -27,14 +27,14 @@ public class ReverseThrustNodeController : NodeBase<ReverseThrustCommand>
         command.Power = Mathf.Round(power);
     }
 
-    public void SetDuration(string value)
+    public void SetDuration(float value)
     {
-        command.Duration = float.TryParse(value, out var parsedValue) ? parsedValue : 0f;
+        command.Duration = Mathf.Round(value * 10) / 10;
     }
 
     protected override void ApplyCommandToUI()
     {
-        input.text = command.Duration.ToString();
-        slider.value = command.Power;
+        powerSlider.value = command.Power;
+        durationSlider.value = command.Duration;
     }
 }
