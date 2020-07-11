@@ -7,7 +7,8 @@ public class ConsoleController : MonoBehaviour
   public ICommand DraftCommand;
 
   [SerializeField] private ShipController ship;
-  [SerializeField] private GameObject thrustNode;
+  [SerializeField] private GameObject thrustNodePrefab;
+  [SerializeField] private GameObject waitNodePrefab;
   [SerializeField] private Canvas consoleCanvas;
   [SerializeField] private GameObject configPanelPlaceholder;
 
@@ -24,18 +25,17 @@ public class ConsoleController : MonoBehaviour
   {
     Debug.Log("Adding draft thrust");
     var draftThrustCommand = new ThrustCommand();
-    DraftCommand = new ThrustCommand();
-    // TODO: Instantiate ThrustCommand config pannel and pass the ThrustCommand to it to work on.
-    DisplayThrustUI((ThrustCommand)DraftCommand);
+    DraftCommand = draftThrustCommand;
+    DisplayConfigPanelUi(draftThrustCommand, thrustNodePrefab);
   }
 
   public void AddWait()
   {
     Debug.Log("Adding draft wait");
     var draftWaitCommand = new WaitCommand();
-    DraftCommand = new WaitCommand();
-    // TODO: Instantiate Command config pannel and pass the Command to it to work on.
-  }
+    DraftCommand = draftWaitCommand;
+    DisplayConfigPanelUi(draftWaitCommand, waitNodePrefab);
+    }
 
 
   public void AddCommandToList()
@@ -74,11 +74,11 @@ public class ConsoleController : MonoBehaviour
   }
 
 
-  private void DisplayThrustUI(ThrustCommand command)
+  private void DisplayConfigPanelUi<T>(T command, GameObject prefab) where T : ICommand
   {
-    var instance = Instantiate(thrustNode, new Vector3(0, 0, -10), Quaternion.identity);
+    var instance = Instantiate(prefab, new Vector3(0, 0, -10), Quaternion.identity);
     instance.transform.SetParent(configPanelPlaceholder.transform, false);
-    instance.GetComponent<ThrustNodeController>().SetThrustCommand(command);
+    instance.GetComponent<NodeBase<T>>().SetCommand(command);
     currentNodeInstance = instance;
   }
 

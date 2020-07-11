@@ -2240,7 +2240,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ship: {fileID: 0}
-  thrustNode: {fileID: 9218763946017225001, guid: 19a3e7292a6385d408ca20fef3e5a851,
+  thrustNodePrefab: {fileID: 9218763946017225001, guid: 19a3e7292a6385d408ca20fef3e5a851,
+    type: 3}
+  waitNodePrefab: {fileID: 9218763946017225001, guid: a09b77a3bcdb31746987e0fe918990ec,
     type: 3}
   consoleCanvas: {fileID: 19690866}
   configPanelPlaceholder: {fileID: 1520832567}
