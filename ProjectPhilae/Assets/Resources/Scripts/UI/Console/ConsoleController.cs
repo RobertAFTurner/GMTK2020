@@ -2,13 +2,14 @@
 using UnityEngine;
 
 public class ConsoleController : MonoBehaviour
-    {
-    [SerializeField] private ShipController ship;
-    [SerializeField] private GameObject thrustNode;
-    [SerializeField] private Canvas consoleCanvas;
+{ 
+  public List<ICommand> committedCommands;
+
+  [SerializeField] private ShipController ship;
+  [SerializeField] private GameObject thrustNode;
+  [SerializeField] private Canvas consoleCanvas;
 
   private GameObject currentNodeInstance;
-  private List<ICommand> committedCommands;
   private ICommand draftCommand;
 
   public void SetShip(ShipController ship)
