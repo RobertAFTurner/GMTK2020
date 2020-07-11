@@ -13,6 +13,7 @@ public class ConsoleController : MonoBehaviour
   [SerializeField] private Canvas consoleCanvas;
   [SerializeField] private GameObject configPanelPlaceholder;
 
+  [SerializeField] private GameManagerController gameManager;
   private GameObject currentNodeInstance;
 
   public void SetShip(ShipController ship)
@@ -52,6 +53,7 @@ public class ConsoleController : MonoBehaviour
   public void Execute()
   {
     Debug.Log("Executing commands");
+    gameManager.StartExecution();
     ship.ExecuteCommands(CommittedCommands);
   }
 
