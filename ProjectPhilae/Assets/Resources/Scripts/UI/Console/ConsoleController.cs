@@ -6,12 +6,18 @@ public class ConsoleController : MonoBehaviour
     [SerializeField]
     Canvas consoleCanvas;
 
+    [SerializeField]
+    GameObject thrustNode;
+
+    GameObject currentNodeInstance;
+
     public List<ICommand> committedCommands;
     public ICommand draftCommand;
 
     void Start()
     {
         committedCommands = new List<ICommand>();
+        currentNodeInstance = null;
     }
 
     // Update is called once per frame
@@ -27,6 +33,17 @@ public class ConsoleController : MonoBehaviour
         var draftThrustCommand = new ThrustCommand();
         draftCommand = new ThrustCommand();
         // TODO: Instantiate ThrustCommand config pannel and pass the ThrustCommand to it to work on.
+        DisplayThrustUI((ThrustCommand)draftCommand);
+    }
+
+
+    private void DisplayThrustUI(ThrustCommand command)
+    {
+        var instance = Instantiate(thrustNode, new Vector3(0, 0, -10), Quaternion.identity);
+        instance.transform.SetParent(consoleCanvas.transform);
+        instance.GetComponent<RectTransform>().anchoredPosition = new Vector3(700, -300, -10);
+        instance.GetComponent<ThrustNodeController>().SetThrustCommand(command);
+        currentNodeInstance = instance;
     }
 
     public void AddWait()
@@ -42,7 +59,10 @@ public class ConsoleController : MonoBehaviour
     {
         Debug.Log("Adding current command");
         committedCommands.Add(draftCommand);
+        
+        currentNodeInstance.GetComponent<NodeBase>().DestroySelf();
         draftCommand = null;
+        currentNodeInstance = null;
         // TODO: Destroy draft command config panel 
     }
 

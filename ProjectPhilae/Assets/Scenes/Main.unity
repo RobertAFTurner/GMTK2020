@@ -1904,7 +1904,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7df7090fd5bde14b97bbea2287077dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  consoleCanvas: {fileID: 0}
+  consoleCanvas: {fileID: 19690866}
+  thrustNode: {fileID: 9218763946017225001, guid: 19a3e7292a6385d408ca20fef3e5a851,
+    type: 3}
 --- !u!4 &1975973360
 Transform:
   m_ObjectHideFlags: 0
