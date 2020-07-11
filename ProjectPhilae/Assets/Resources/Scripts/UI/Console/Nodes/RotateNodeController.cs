@@ -1,6 +1,7 @@
 ﻿using System.Linq;
-using System.Linq.Expressions;
 using TMPro;
+using static RotateCommand;
+
 public class RotateNodeController : NodeBase<RotateCommand>
 {
     private TMP_InputField degreeInput;
@@ -23,7 +24,7 @@ public class RotateNodeController : NodeBase<RotateCommand>
 
     private void SetDirection(int index)
     {
-        command.Direction = index == 0 ? -1f : 1f;
+        command.Direction = index == 0 ? AngularDirection.Clockwise : AngularDirection.Anticlockwise;
     }
 
     public void OnDisable()

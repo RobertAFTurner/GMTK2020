@@ -2,10 +2,15 @@ using UnityEngine;
 
 public class RotateCommand : ICommand
 {
+    public enum AngularDirection
+    {
+        Clockwise,
+        Anticlockwise
+    }
+
     public float Duration;
     public float Degrees;
-    public float Direction = 1f;
-    private string directionString => Direction > 0 ? "anticlockwise" : "clockwise";
+    public AngularDirection Direction;
 
     public CommandState State { get; private set; } = CommandState.Pending;
 
@@ -21,7 +26,7 @@ public class RotateCommand : ICommand
             State = CommandState.InProgress;
             startTime = Time.time;
             startAngle = shipController.GetRigidBody().rotation;
-            targetAngle = startAngle + Degrees * Direction;
+            targetAngle = startAngle + Degrees * (Direction == AngularDirection.Clockwise ? -1f : 1f);
         }
 
         if (State == CommandState.InProgress)
@@ -48,6 +53,6 @@ public class RotateCommand : ICommand
 
     public override string ToString()
     {
-        return $"Rotate by {Degrees} degrees {directionString} over {Duration} seconds";
+        return $"Rotate by {Degrees} degrees {Direction} over {Duration} seconds";
     }
 }
