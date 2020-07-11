@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using static GameManagerController;
 
-public class ExecuteButtonDisplayLogic : MonoBehaviour
+public class ExecuteButtonLogic : MonoBehaviour
 {
     public GameObject Button;
 

@@ -839,7 +839,6 @@ GameObject:
   - component: {fileID: 2133276766}
   - component: {fileID: 2133276765}
   - component: {fileID: 2133276764}
-  - component: {fileID: 2133276767}
   m_Layer: 5
   m_Name: AbortButton
   m_TagString: Untagged
@@ -949,27 +948,15 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 0}
         m_MethodName: LoadLevel
-        m_Mode: 1
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
---- !u!114 &2133276767
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2133276762}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c2728db7d7ad514c986f5080e713d4b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &290202739860211750
 GameObject:
   m_ObjectHideFlags: 0
@@ -1226,7 +1213,6 @@ GameObject:
   - component: {fileID: 411931423679851332}
   - component: {fileID: 411931423679851355}
   - component: {fileID: 411931423679851354}
-  - component: {fileID: 845837296}
   m_Layer: 5
   m_Name: ExecuteButton
   m_TagString: Untagged
@@ -1345,18 +1331,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &845837296
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 411931423679851352}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ece2329057782c4fbcbb2b5a264af09, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &411931423710130765
 GameObject:
   m_ObjectHideFlags: 0
@@ -2619,6 +2593,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 411931424820579913}
+  - component: {fileID: 1906499264}
+  - component: {fileID: 1906499265}
   m_Layer: 5
   m_Name: Controls
   m_TagString: Untagged
@@ -2654,6 +2630,32 @@ RectTransform:
   m_AnchoredPosition: {x: -244.2998, y: 115.62012}
   m_SizeDelta: {x: 488.63123, y: 230.28818}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1906499264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 411931424820579912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ece2329057782c4fbcbb2b5a264af09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Button: {fileID: 411931423679851352}
+--- !u!114 &1906499265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 411931424820579912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c2728db7d7ad514c986f5080e713d4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Button: {fileID: 2133276762}
 --- !u!1 &411931424827382924
 GameObject:
   m_ObjectHideFlags: 0

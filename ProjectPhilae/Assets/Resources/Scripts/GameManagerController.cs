@@ -114,6 +114,7 @@ public class GameManagerController : Singleton<GameManagerController>
 
     public void LoadLevel(bool keepCommands = false)
     {
+        Debug.Log($"Load level, keep commands: {keepCommands}");
         if (keepCommands)
         {
             var consoleController = GameObject.Find("Console").GetComponent<ConsoleController>();

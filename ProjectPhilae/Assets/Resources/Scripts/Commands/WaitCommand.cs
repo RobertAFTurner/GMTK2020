@@ -31,9 +31,6 @@ public class WaitCommand : Command
 
     protected override string GetDisplayText()
     {
-        if (State == CommandState.InProgress)
-            return $">Wait for {Duration} seconds ({(Time.time - startTime):.0#}/{Duration:.0#})";
-
         return $"Wait for {Duration} seconds";
     }
 }
