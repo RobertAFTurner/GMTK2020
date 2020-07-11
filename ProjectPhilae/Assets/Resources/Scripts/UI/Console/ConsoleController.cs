@@ -6,7 +6,7 @@ public class ConsoleController : MonoBehaviour
   public List<ICommand> CommittedCommands;
   public ICommand DraftCommand;
 
-  [SerializeField] private ShipController ship;
+  private ShipController ship;
   [SerializeField] private GameObject thrustNodePrefab;
   [SerializeField] private GameObject waitNodePrefab;
   [SerializeField] private GameObject reverseThrustNodePrefab;

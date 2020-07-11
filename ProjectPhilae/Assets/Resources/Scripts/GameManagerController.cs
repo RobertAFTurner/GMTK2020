@@ -19,8 +19,11 @@ public class GameManagerController : Singleton<GameManagerController>
 
     private List<GameObject> waypoints;
 
+    private int currentLevel;
+
     void Start()
     {
+        currentLevel = 1;
         Load();
     }
 
@@ -55,7 +58,8 @@ public class GameManagerController : Singleton<GameManagerController>
 
         if(state == GameStates.Win)
         {
-            SceneManager.LoadScene("Main", LoadSceneMode.Single);
+            currentLevel++;
+            SceneManager.LoadScene($"Level_{currentLevel}", LoadSceneMode.Single);
             Load();
         }
     }
