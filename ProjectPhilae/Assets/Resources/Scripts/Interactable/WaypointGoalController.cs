@@ -1,9 +1,7 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 
 public class WaypointGoalController : MonoBehaviour
-{
-    
+{  
     public bool IsCollected { get; set; } 
 
     public void OnTriggerEnter2D(Collider2D other)
