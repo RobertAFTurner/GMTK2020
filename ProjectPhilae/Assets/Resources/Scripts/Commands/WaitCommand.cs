@@ -1,14 +1,17 @@
 public class WaitCommand : ICommand
 {
-    public float Duration;
+  public float Duration;
 
-    public bool ExecuteTillDone()
-    {
-        return true;
-    }
+  public CommandState State { get; private set; } = CommandState.Pending;
 
-    public override string ToString()
-    {
-        return $"Waiting for {Duration} seconds";
-    }
+  public bool ExecuteTillDone(ShipController shipController)
+  {
+    State = CommandState.Done;
+    return true;
+  }
+
+  public override string ToString()
+  {
+    return $"Waiting for {Duration} seconds";
+  }
 }
