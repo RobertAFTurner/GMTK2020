@@ -53,6 +53,9 @@ public class RotateCommand : ICommand
 
     public override string ToString()
     {
+        if (State == CommandState.InProgress)
+            return $">Rotate by {Degrees} degrees {Direction} over {Duration} seconds ({(Time.time - startTime):.0#}/{Duration:.0#})";
+
         return $"Rotate by {Degrees} degrees {Direction} over {Duration} seconds";
     }
 }

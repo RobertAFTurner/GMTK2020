@@ -4,8 +4,10 @@ using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class ShipController : MonoBehaviour
+public class ShipController : SingletonDestructible<GameManagerController>
 {
+    public static ShipController Instance => (ShipController)instance;
+
     public enum ShipState
     {
         WaitingToLaunch,
@@ -13,8 +15,9 @@ public class ShipController : MonoBehaviour
         Stopped
     }
 
-    List<ICommand> myCommands;
-    ICommand currentlyExecutingCommand;
+    public float fuel;
+    public List<ICommand> myCommands;
+    public ICommand currentlyExecutingCommand;
 
     [SerializeField]
     private Rigidbody2D shipRigidbody;
@@ -23,6 +26,7 @@ public class ShipController : MonoBehaviour
 
     void Start()
     {
+        fuel = 100f;
         state = ShipState.WaitingToLaunch;
         shipRigidbody = GetComponent<Rigidbody2D>();
     }

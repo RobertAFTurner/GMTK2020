@@ -2,42 +2,46 @@ using UnityEngine;
 
 public class ThrustCommand : ICommand
 {
-  public float Duration;
-  public float Power;
+    public float Duration;
+    public float Power;
 
-  public CommandState State { get; private set; } = CommandState.Pending;
+    public CommandState State { get; private set; } = CommandState.Pending;
 
-  private float startTime;
+    private float startTime;
 
-  public bool ExecuteTillDone(ShipController shipController)
-  {
-    if (State == CommandState.Pending)
+    public bool ExecuteTillDone(ShipController shipController)
     {
-      State = CommandState.InProgress;
-      startTime = Time.time;
+        if (State == CommandState.Pending)
+        {
+            State = CommandState.InProgress;
+            startTime = Time.time;
+        }
+
+        if (State == CommandState.InProgress)
+        {
+            Execute(shipController);
+            if (Time.time > startTime + Duration)
+            {
+                State = CommandState.Done;
+                return true;
+            }
+        }
+
+        return false;
     }
 
-    if (State == CommandState.InProgress)
+    private void Execute(ShipController shipController)
     {
-      Execute(shipController);
-      if (Time.time > startTime + Duration)
-      {
-        State = CommandState.Done;
-        return true;
-      }
+        var rigidbody = shipController.GetRigidBody();
+        rigidbody.AddForce(rigidbody.transform.up * Power);
+        shipController.fuel -= Power * Time.deltaTime;
     }
 
-    return false;
-  }
+    public override string ToString()
+    {
+        if (State == CommandState.InProgress)
+            return $">Thrust for {Duration} seconds at power {Power} ({(Time.time - startTime):.0#}/{Duration:.0#})";
 
-  private void Execute(ShipController shipController)
-  {
-    var rigidbody = shipController.GetRigidBody();
-    rigidbody.AddForce(rigidbody.transform.up * Power);
-  }
-
-  public override string ToString()
-  {
-    return $"Thrust for {Duration} seconds at power {Power}";
-  }
+        return $"Thrust for {Duration} seconds at power {Power}";
+    }
 }

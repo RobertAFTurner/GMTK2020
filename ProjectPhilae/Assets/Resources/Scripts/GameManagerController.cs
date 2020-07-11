@@ -7,7 +7,7 @@ public class GameManagerController : Singleton<GameManagerController>
 {
     public static GameManagerController Instance => (GameManagerController)instance;
 
-    private enum GameStates
+    public enum GameStates
     {
         EnterInstructions,
         Executing,
@@ -15,7 +15,7 @@ public class GameManagerController : Singleton<GameManagerController>
         Lose
     }
 
-    GameStates state = GameStates.EnterInstructions;
+    public GameStates State = GameStates.EnterInstructions;
 
     private List<GameObject> waypoints;
 
@@ -29,16 +29,16 @@ public class GameManagerController : Singleton<GameManagerController>
 
     private void Load()
     {
-        state = GameStates.EnterInstructions;
+        State = GameStates.EnterInstructions;
         waypoints = new List<GameObject>();
         waypoints.AddRange(GameObject.FindGameObjectsWithTag("Waypoint"));
     }
 
-    public void StartExecution() => state = GameStates.Executing;
+    public void StartExecution() => State = GameStates.Executing;
 
     void Update()
     {
-        if (state == GameStates.Executing)
+        if (State == GameStates.Executing)
         {
             if (waypoints.Any())
             {
@@ -52,11 +52,11 @@ public class GameManagerController : Singleton<GameManagerController>
             }
             else
             {
-                state = GameStates.Win; 
+                State = GameStates.Win; 
             }
         }
 
-        if(state == GameStates.Win)
+        if(State == GameStates.Win)
         {
             currentLevel++;
             SceneManager.LoadScene($"Level_{currentLevel}", LoadSceneMode.Single);

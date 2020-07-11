@@ -6,7 +6,6 @@ public class ConsoleController : MonoBehaviour
   public List<ICommand> CommittedCommands;
   public ICommand DraftCommand;
 
-  private ShipController ship;
   [SerializeField] private GameObject thrustNodePrefab;
   [SerializeField] private GameObject waitNodePrefab;
   [SerializeField] private GameObject reverseThrustNodePrefab;
@@ -16,10 +15,6 @@ public class ConsoleController : MonoBehaviour
   [SerializeField] private GameObject configPanelPlaceholder;
   private GameObject currentNodeInstance;
 
-  public void SetShip(ShipController ship)
-  {
-    this.ship = ship;
-  }
 
   // Triggered by Button clicks ------------
   public void AddThrust() => SetDraftCommand(new ThrustCommand(), thrustNodePrefab);
@@ -45,7 +40,7 @@ public class ConsoleController : MonoBehaviour
   {
     Debug.Log("Executing commands");
     GameManagerController.Instance.StartExecution();
-    ship.ExecuteCommands(CommittedCommands);
+    ShipController.Instance.ExecuteCommands(CommittedCommands);
   }
 
   private void Start()

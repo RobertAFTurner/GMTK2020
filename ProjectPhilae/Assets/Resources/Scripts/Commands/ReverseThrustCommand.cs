@@ -38,6 +38,9 @@ public class ReverseThrustCommand : ICommand
 
     public override string ToString()
     {
+        if (State == CommandState.InProgress)
+            return $">Reverse thrust for {Duration} seconds at power {Power} ({(Time.time - startTime):.0#}/{Duration:.0#})";
+
         return $"Reverse thrust for {Duration} seconds at power {Power}";
     }
 }
