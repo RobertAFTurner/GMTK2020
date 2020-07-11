@@ -8,7 +8,11 @@ public class AbortButtonLogic : MonoBehaviour
 
     void OnEnable()
     {
-        Button.GetComponent<Button>().onClick.AddListener(() => GameManagerController.Instance.LoadLevel(true));
+        Button.GetComponent<Button>().onClick.AddListener(() =>
+        {
+            ShipController.Instance.Stop();
+            GameManagerController.Instance.LoadLevel(true);
+        });
     }
 
     void OnDisable()

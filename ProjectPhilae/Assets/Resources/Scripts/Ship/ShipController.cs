@@ -36,6 +36,11 @@ public class ShipController : SingletonDestructible<GameManagerController>
         shipRigidbody = GetComponent<Rigidbody2D>();
     }
 
+    public void Stop()
+    {
+        state = ShipState.Stopped;
+    }
+
     void FixedUpdate()
     {
         if (state == ShipState.Executing)
@@ -82,6 +87,7 @@ public class ShipController : SingletonDestructible<GameManagerController>
         if(other.gameObject.tag == "Environment")
         {
             Debug.Log("Boom - you died");
+            Stop();
             GameManagerController.Instance.LoadLevel(true);
         }
     }

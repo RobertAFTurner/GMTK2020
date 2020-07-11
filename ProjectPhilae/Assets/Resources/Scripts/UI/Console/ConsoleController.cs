@@ -55,7 +55,7 @@ public class ConsoleController : MonoBehaviour
         Debug.Log("Removing command");
         if (selectedCommandIndex.HasValue)
         {
-            CloseDraftCommandNode();
+            CloseDraftCommandNode(false);
             Commands.RemoveAt(selectedCommandIndex.Value);
             SelectUp();
         }
@@ -118,7 +118,7 @@ public class ConsoleController : MonoBehaviour
     {
         if (DraftCommand != null)
         {
-            CloseDraftCommandNode();
+            CloseDraftCommandNode(false);
         }
 
         Debug.Log($"Adding command: {draftCommand.GetType().Name}");
@@ -127,8 +127,11 @@ public class ConsoleController : MonoBehaviour
         DisplayConfigPanelUi(draftCommand, configPrefab);
     }
 
-    public void CloseDraftCommandNode()
+    public void CloseDraftCommandNode(bool clearSelectedCommandIndex = true)
     {
+        if (clearSelectedCommandIndex)
+            selectedCommandIndex = null;
+
         DraftCommand.State = CommandState.Pending;
         currentNodeInstance?.GetComponent<NodeBase>().DestroySelf();
         currentNodeInstance = null;
