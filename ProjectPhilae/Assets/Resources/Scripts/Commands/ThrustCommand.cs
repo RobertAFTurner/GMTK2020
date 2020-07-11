@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ThrustCommand : Command
 {
-    public ThrustCommand() : this(0.1f, 5f)
+    public ThrustCommand() : this(0.5f, 3f)
     { }
 
     public ThrustCommand(float duration, float power) : base(duration)
