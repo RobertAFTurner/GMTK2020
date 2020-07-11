@@ -4,8 +4,10 @@ using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class ShipController : MonoBehaviour
+public class ShipController : SingletonDestructible<GameManagerController>
 {
+    public static ShipController Instance => (ShipController)instance;
+
     public enum ShipState
     {
         WaitingToLaunch,

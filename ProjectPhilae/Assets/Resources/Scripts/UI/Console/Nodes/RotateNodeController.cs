@@ -18,8 +18,6 @@ public class RotateNodeController : NodeBase<RotateCommand>
 
         directionInput = this.GetComponentsInChildren<TMP_Dropdown>().Single(c => c.name.Contains("Direction"));
         directionInput.onValueChanged.AddListener(SetDirection);
-
-        SetDirection(0);
     }
 
     private void SetDirection(int index)
