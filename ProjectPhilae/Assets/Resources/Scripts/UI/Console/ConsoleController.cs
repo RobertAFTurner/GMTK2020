@@ -11,6 +11,7 @@ public class ConsoleController : MonoBehaviour
   [SerializeField] private GameObject waitNodePrefab;
   [SerializeField] private GameObject reverseThrustNodePrefab;
   [SerializeField] private GameObject stopNodePrefab;
+  [SerializeField] private GameObject rotateNodePrefab;
   [SerializeField] private Canvas consoleCanvas;
   [SerializeField] private GameObject configPanelPlaceholder;
 
@@ -27,6 +28,7 @@ public class ConsoleController : MonoBehaviour
   public void AddWait() => SetDraftCommand(new WaitCommand(), waitNodePrefab);
   public void AddReverseThrust() => SetDraftCommand(new ReverseThrustCommand(), reverseThrustNodePrefab);
   public void AddStop() => SetDraftCommand(new StopCommand(), stopNodePrefab);
+    public void AddRotate() => (new RotateCommand(), rotateNodePrefab);
 
   public void AddCommandToList()
   {
