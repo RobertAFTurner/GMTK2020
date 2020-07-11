@@ -2,31 +2,18 @@
 using UnityEngine;
 
 public class ConsoleController : MonoBehaviour
-{
-  [SerializeField]
-  Canvas consoleCanvas;
+    {
+    [SerializeField] private ShipController ship;
+    [SerializeField] private GameObject thrustNode;
+    [SerializeField] private Canvas consoleCanvas;
 
-  [SerializeField]
-  GameObject thrustNode;
+  private GameObject currentNodeInstance;
+  private List<ICommand> committedCommands;
+  private ICommand draftCommand;
 
-  [SerializeField]
-  ShipController ship;
-
-  GameObject currentNodeInstance;
-
-  public List<ICommand> committedCommands;
-  public ICommand draftCommand;
-
-  void Start()
+  public void SetShip(ShipController ship)
   {
-    committedCommands = new List<ICommand>();
-    currentNodeInstance = null;
-  }
-
-  // Update is called once per frame
-  void Update()
-  {
-
+    this.ship = ship;
   }
 
   // Triggered by Button clicks ------------
@@ -37,16 +24,6 @@ public class ConsoleController : MonoBehaviour
     draftCommand = new ThrustCommand();
     // TODO: Instantiate ThrustCommand config pannel and pass the ThrustCommand to it to work on.
     DisplayThrustUI((ThrustCommand)draftCommand);
-  }
-
-
-  private void DisplayThrustUI(ThrustCommand command)
-  {
-    var instance = Instantiate(thrustNode, new Vector3(0, 0, -10), Quaternion.identity);
-    instance.transform.SetParent(consoleCanvas.transform);
-    instance.GetComponent<RectTransform>().anchoredPosition = new Vector3(700, -300, -10);
-    instance.GetComponent<ThrustNodeController>().SetThrustCommand(command);
-    currentNodeInstance = instance;
   }
 
   public void AddWait()
@@ -80,5 +57,27 @@ public class ConsoleController : MonoBehaviour
     Debug.Log("Executing commands");
     ship.ExecuteCommands(committedCommands);
   }
+
+  private void Start()
+  {
+    committedCommands = new List<ICommand>();
+    currentNodeInstance = null;
+  }
+
+  // Update is called once per frame
+  private void Update()
+  {
+  }
+
+
+  private void DisplayThrustUI(ThrustCommand command)
+  {
+    var instance = Instantiate(thrustNode, new Vector3(0, 0, -10), Quaternion.identity);
+    instance.transform.SetParent(consoleCanvas.transform);
+    instance.GetComponent<RectTransform>().anchoredPosition = new Vector3(700, -300, -10);
+    instance.GetComponent<ThrustNodeController>().SetThrustCommand(command);
+    currentNodeInstance = instance;
+  }
+
   // Triggered by Button clicks ------------
 }

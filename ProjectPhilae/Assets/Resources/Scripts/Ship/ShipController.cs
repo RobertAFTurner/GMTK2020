@@ -24,6 +24,7 @@ public class ShipController : MonoBehaviour
     void Start()
     {
         state = ShipState.WaitingToLaunch;
+        shipRigidbody = GetComponent<Rigidbody2D>();
     }
 
     void FixedUpdate()
