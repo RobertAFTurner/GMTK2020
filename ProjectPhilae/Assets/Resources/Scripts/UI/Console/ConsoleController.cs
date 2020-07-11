@@ -10,6 +10,7 @@ public class ConsoleController : MonoBehaviour
   [SerializeField] private GameObject thrustNodePrefab;
   [SerializeField] private GameObject waitNodePrefab;
   [SerializeField] private GameObject reverseThrustNodePrefab;
+  [SerializeField] private GameObject rotateNodePrefab;
   [SerializeField] private Canvas consoleCanvas;
   [SerializeField] private GameObject configPanelPlaceholder;
 
@@ -33,9 +34,14 @@ public class ConsoleController : MonoBehaviour
     }
 
   public void AddReverseThrust()
-  {
+  { 
       SetDraftCommand(new ReverseThrustCommand(), reverseThrustNodePrefab);
-    }
+  }
+
+  public void AddRotate()
+  {
+      SetDraftCommand(new RotateCommand(), rotateNodePrefab);
+  }
 
   public void AddCommandToList()
   {

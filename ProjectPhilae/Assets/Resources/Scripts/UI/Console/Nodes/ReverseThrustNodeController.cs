@@ -19,6 +19,7 @@ public class ReverseThrustNodeController : NodeBase<ReverseThrustCommand>
     public void OnDisable()
     {
         input.onValueChanged.RemoveAllListeners();
+        slider.onValueChanged.RemoveAllListeners();
     }
 
     private void SetPower(float power)
