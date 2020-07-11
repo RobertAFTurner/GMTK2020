@@ -4,13 +4,6 @@ using UnityEngine;
 
 public class ShipStatusDisplay : MonoBehaviour
 {
-    private const string template =
-        @"Probe Status:
-
-STATE: {0}
-FUEL:  {1}/100
-";
-
     private TextMeshProUGUI text;
 
     // Start is called before the first frame update
@@ -22,8 +15,12 @@ FUEL:  {1}/100
     // Update is called once per frame
     void Update()
     {
-        var output = string.Format(template, GameManagerController.Instance.State, ShipController.Instance.fuel);
+        string status = GameManagerController.Instance.State.ToString();
 
-        text.SetText(output);
+        if (GameManagerController.Instance.State == GameManagerController.GameStates.Executing &&
+            ShipController.Instance.currentlyExecutingCommand == null)
+            status = "OutOfControl!";
+
+        text.SetText($"PROBE STATUS:\r\n{status}\r\n\r\nFUEL:  {ShipController.Instance.fuel:###}/100");
     }
 }

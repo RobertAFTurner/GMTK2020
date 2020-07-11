@@ -38,6 +38,8 @@ public class StopCommand : ICommand
         var timeSinceStarted = Time.time - startTime;
         var percentComplete = timeSinceStarted / Duration;
         rigidbody.velocity = Vector2.Lerp(startVel, Vector2.zero, percentComplete);
+
+        shipController.fuel -= Time.deltaTime / Duration;
     }
 
     public override string ToString()

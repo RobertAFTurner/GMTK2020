@@ -34,6 +34,7 @@ public class ReverseThrustCommand : ICommand
     {
         var rigidbody = shipController.GetRigidBody();
         rigidbody.AddForce(rigidbody.transform.up * Power * -1f);
+        shipController.fuel -= Power * Time.deltaTime;
     }
 
     public override string ToString()

@@ -49,6 +49,8 @@ public class RotateCommand : ICommand
         var angle = Mathf.SmoothStep(startAngle, targetAngle, (Time.time - startTime)/Duration);
         //var angle = Mathf.SmoothDampAngle(rigidbody.rotation, targetAngle, ref currentVelocity, Duration/2, float.MaxValue, Time.deltaTime);
         rigidbody.MoveRotation(angle);
+
+        shipController.fuel -= Time.deltaTime / Duration;
     }
 
     public override string ToString()
