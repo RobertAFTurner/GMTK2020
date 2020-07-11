@@ -1,6 +1,4 @@
 ﻿using System.Linq;
-using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 public class WaitNodeController : NodeBase<WaitCommand>
 {
