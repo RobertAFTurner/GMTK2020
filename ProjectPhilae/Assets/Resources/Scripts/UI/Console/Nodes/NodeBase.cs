@@ -15,5 +15,8 @@ public abstract class NodeBase<T> : NodeBase where T : Command
     public void SetCommand(T command)
     {
         this.command = command;
+        ApplyCommandToUI();
     }
+
+    protected abstract void ApplyCommandToUI();
 }

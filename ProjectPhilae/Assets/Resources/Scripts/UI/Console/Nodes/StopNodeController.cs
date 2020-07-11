@@ -8,7 +8,8 @@ public class StopNodeController : NodeBase<StopCommand>
     void OnEnable()
     {
         input = this.GetComponentsInChildren<TMP_InputField>().Single(c => c.name.Contains("Time"));
-        input.onValueChanged.AddListener(SetTime);
+        input.onValueChanged.AddListener(SetDuration);
+        input.text = command.Duration.ToString();
     }
 
     public void OnDisable()
@@ -16,8 +17,13 @@ public class StopNodeController : NodeBase<StopCommand>
         input.onValueChanged.RemoveAllListeners();
     }
 
-    public void SetTime(string value)
+    public void SetDuration(string value)
     {
         command.Duration = float.TryParse(value, out var parsedValue) ? parsedValue : 0f;
+    }
+
+    protected override void ApplyCommandToUI()
+    {
+        input.text = command.Duration.ToString();
     }
 }

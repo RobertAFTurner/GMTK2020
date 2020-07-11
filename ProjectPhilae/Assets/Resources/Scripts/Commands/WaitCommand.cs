@@ -2,6 +2,13 @@ using UnityEngine;
 
 public class WaitCommand : Command
 {
+    public WaitCommand() : this(5f)
+    { }
+
+    public WaitCommand(float duration) : base(duration)
+    {
+    }
+
     public override bool ExecuteTillDone(ShipController shipController)
     {
         if (State == CommandState.Pending)

@@ -2,6 +2,14 @@ using UnityEngine;
 
 public class ThrustCommand : Command
 {
+    public ThrustCommand() : this(0.1f, 5f)
+    { }
+
+    public ThrustCommand(float duration, float power) : base(duration)
+    {
+        Power = power;
+    }
+
     private const float FuelConsumptionMultiplier = 10f;
 
     public float Power;

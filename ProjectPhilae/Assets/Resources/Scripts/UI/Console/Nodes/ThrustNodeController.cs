@@ -12,7 +12,7 @@ public class ThrustNodeController : NodeBase<ThrustCommand>
     {
         input = this.GetComponentsInChildren<TMP_InputField>().Single(c => c.name.Contains("Duration"));
         input.onValueChanged.AddListener(SetDuration);
-        
+
         slider = this.GetComponentsInChildren<Slider>().Single(c => c.name.Contains("Power"));
         slider.onValueChanged.AddListener(SetPower);
     }
@@ -24,11 +24,17 @@ public class ThrustNodeController : NodeBase<ThrustCommand>
 
     private void SetPower(float power)
     {
-        command.Power = power;
+        command.Power = Mathf.Round(power);
     }
 
     public void SetDuration(string value)
     {
         command.Duration = float.TryParse(value, out var parsedValue) ? parsedValue : 0f;
+    }
+
+    protected override void ApplyCommandToUI()
+    {
+        slider.value = command.Power;
+        input.text = command.Duration.ToString();
     }
 }

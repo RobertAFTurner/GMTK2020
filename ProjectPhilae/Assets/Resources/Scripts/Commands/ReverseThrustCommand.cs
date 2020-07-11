@@ -2,6 +2,14 @@ using UnityEngine;
 
 public class ReverseThrustCommand : Command
 {
+    public ReverseThrustCommand() : this(0.1f, 5f)
+    {}
+
+    public ReverseThrustCommand(float duration, float power) : base(duration)
+    {
+        Power = power;
+    }
+
     private const float FuelConsumptionMultiplier = 10f;
 
     public float Power;

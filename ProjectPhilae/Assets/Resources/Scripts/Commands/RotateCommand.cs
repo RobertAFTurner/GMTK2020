@@ -2,6 +2,15 @@ using UnityEngine;
 
 public class RotateCommand : Command
 {
+    public RotateCommand() : this(2f, 90, AngularDirection.Clockwise)
+    { }
+
+    public RotateCommand(float duration, float degrees, AngularDirection direction) : base(duration)
+    {
+        Degrees = degrees;
+        Direction = direction;
+    }
+
     private const float FuelConsumptionMultiplier = 5f;
 
     public enum AngularDirection

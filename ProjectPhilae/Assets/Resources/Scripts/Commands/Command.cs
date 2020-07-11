@@ -1,6 +1,11 @@
 using UnityEngine;
 public abstract class Command
 {
+    public Command(float duration)
+    {
+        Duration = duration;
+    }
+
     public abstract bool ExecuteTillDone(ShipController shipController);
     public CommandState State { get; set; }
     

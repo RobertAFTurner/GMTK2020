@@ -2,6 +2,13 @@ using UnityEngine;
 
 public class StopCommand : Command
 {
+    public StopCommand() : this(1f)
+    { }
+
+    public StopCommand(float duration) : base(duration)
+    {
+    }
+
     private const float FuelConsumptionMultiplier = 10f;
     
     private Vector2 startVel;

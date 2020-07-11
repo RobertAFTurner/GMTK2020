@@ -19,4 +19,9 @@ public class WaitNodeController : NodeBase<WaitCommand>
     {
         command.Duration = float.TryParse(value, out var parsedValue) ? parsedValue : 0f;
     }
+
+    protected override void ApplyCommandToUI()
+    {
+        input.text = command.Duration.ToString();
+    }
 }
