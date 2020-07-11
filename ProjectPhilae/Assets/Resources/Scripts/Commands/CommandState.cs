@@ -1,7 +1,8 @@
 public enum CommandState
 {
-  Pending,
-  InProgress,
-  UnableToComplete,
-  Done
+    Editing,
+    Pending,
+    InProgress,
+    UnableToComplete,
+    Done
 }

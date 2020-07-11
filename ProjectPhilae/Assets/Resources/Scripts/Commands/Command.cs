@@ -2,7 +2,7 @@ using UnityEngine;
 public abstract class Command
 {
     public abstract bool ExecuteTillDone(ShipController shipController);
-    public CommandState State { get; protected set; }
+    public CommandState State { get; set; }
     
     protected float startTime;
     public float Duration;
@@ -12,6 +12,9 @@ public abstract class Command
     public override string ToString()
     {
         var displayText = GetDisplayText();
+
+        if (State == CommandState.Editing)
+            return $">{displayText}";
 
         if (State == CommandState.InProgress)
             return $">{displayText} ({(Time.time - startTime):.0}/{Duration:.0})";
