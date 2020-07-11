@@ -45,7 +45,8 @@ public class ConsoleController : MonoBehaviour
 
   private void Start()
   {
-    CommittedCommands = new List<Command>();
+    var prevCommands = GameManagerController.Instance.GetPreviousCommands();
+    CommittedCommands = prevCommands != null ? prevCommands : new List<Command>();
     currentNodeInstance = null;
   }
 

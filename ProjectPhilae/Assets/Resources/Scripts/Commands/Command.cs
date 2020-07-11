@@ -2,7 +2,7 @@ using UnityEngine;
 public abstract class Command
 {
     public abstract bool ExecuteTillDone(ShipController shipController);
-    public CommandState State { get; protected set; }
+    public CommandState State { get; set; }
     
     protected float startTime;
     public float Duration;
