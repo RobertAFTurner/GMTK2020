@@ -51,10 +51,16 @@ public class ConsoleController : MonoBehaviour
 
     public void RemoveCommandFromList()
     {
+        Debug.Log("Removing command");
         if (selectedCommandIndex.HasValue)
         {
-            Debug.Log("Removing command");
+            CloseDraftCommandNode();
             Commands.RemoveAt(selectedCommandIndex.Value);
+            SelectUp();
+        }
+        else if (Commands.Count > 0)
+        {
+            Commands.RemoveAt(Commands.Count -1);
         }
     }
 
