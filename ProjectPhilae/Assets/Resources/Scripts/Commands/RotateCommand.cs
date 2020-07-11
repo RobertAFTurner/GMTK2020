@@ -1,25 +1,23 @@
 using UnityEngine;
 
-public class RotateCommand : ICommand
+public class RotateCommand : Command
 {
+    private const float FuelConsumptionMultiplier = 5f;
+
     public enum AngularDirection
     {
         Clockwise,
         Anticlockwise
     }
 
-    public float Duration;
     public float Degrees;
     public AngularDirection Direction;
 
-    public CommandState State { get; private set; } = CommandState.Pending;
-
-    private float startTime;
     private float startAngle;
     private float targetAngle;
     //private float currentVelocity;
 
-    public bool ExecuteTillDone(ShipController shipController)
+    public override bool ExecuteTillDone(ShipController shipController)
     {
         if (State == CommandState.Pending)
         {
@@ -31,7 +29,14 @@ public class RotateCommand : ICommand
 
         if (State == CommandState.InProgress)
         {
+            if (shipController.fuel <= 0)
+            {
+                State = CommandState.UnableToComplete;
+                return true;
+            }
+
             Execute(shipController);
+
             if (Time.time > startTime + Duration)
             {
                 State = CommandState.Done;
@@ -50,14 +55,11 @@ public class RotateCommand : ICommand
         //var angle = Mathf.SmoothDampAngle(rigidbody.rotation, targetAngle, ref currentVelocity, Duration/2, float.MaxValue, Time.deltaTime);
         rigidbody.MoveRotation(angle);
 
-        shipController.fuel -= Time.deltaTime / Duration;
+        shipController.fuel -= FuelConsumptionMultiplier * Time.deltaTime / Duration;
     }
 
-    public override string ToString()
+    protected override string GetDisplayText()
     {
-        if (State == CommandState.InProgress)
-            return $">Rotate by {Degrees} degrees {Direction} over {Duration} seconds ({(Time.time - startTime):.0#}/{Duration:.0#})";
-
         return $"Rotate by {Degrees} degrees {Direction} over {Duration} seconds";
     }
 }

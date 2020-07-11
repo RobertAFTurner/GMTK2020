@@ -1,15 +1,12 @@
 using UnityEngine;
 
-public class ReverseThrustCommand : ICommand
+public class ReverseThrustCommand : Command
 {
-    public float Duration;
+    private const float FuelConsumptionMultiplier = 10f;
+
     public float Power;
 
-    public CommandState State { get; private set; } = CommandState.Pending;
-
-    private float startTime;
-
-    public bool ExecuteTillDone(ShipController shipController)
+    public override bool ExecuteTillDone(ShipController shipController)
     {
         if (State == CommandState.Pending)
         {
@@ -19,7 +16,14 @@ public class ReverseThrustCommand : ICommand
 
         if (State == CommandState.InProgress)
         {
+            if (shipController.fuel <= 0)
+            {
+                State = CommandState.UnableToComplete;
+                return true;
+            }
+
             Execute(shipController);
+            
             if (Time.time > startTime + Duration)
             {
                 State = CommandState.Done;
@@ -34,14 +38,11 @@ public class ReverseThrustCommand : ICommand
     {
         var rigidbody = shipController.GetRigidBody();
         rigidbody.AddForce(rigidbody.transform.up * Power * -1f);
-        shipController.fuel -= Power * Time.deltaTime;
+        shipController.fuel -= FuelConsumptionMultiplier * Power * Time.deltaTime;
     }
 
-    public override string ToString()
+    protected override string GetDisplayText()
     {
-        if (State == CommandState.InProgress)
-            return $">Reverse thrust for {Duration} seconds at power {Power} ({(Time.time - startTime):.0#}/{Duration:.0#})";
-
         return $"Reverse thrust for {Duration} seconds at power {Power}";
     }
 }

@@ -8,7 +8,7 @@ public abstract class NodeBase : MonoBehaviour
     }
 }
 
-public abstract class NodeBase<T> : NodeBase where T : ICommand
+public abstract class NodeBase<T> : NodeBase where T : Command
 {
     protected T command;
 

@@ -1,16 +1,12 @@
 using UnityEngine;
 
-public class StopCommand : ICommand
+public class StopCommand : Command
 {
-    public float Duration;
-
-    public CommandState State { get; private set; } = CommandState.Pending;
-
-    private float startTime;
-
+    private const float FuelConsumptionMultiplier = 10f;
+    
     private Vector2 startVel;
 
-    public bool ExecuteTillDone(ShipController shipController)
+    public override bool ExecuteTillDone(ShipController shipController)
     {
         if (State == CommandState.Pending)
         {
@@ -21,6 +17,12 @@ public class StopCommand : ICommand
 
         if (State == CommandState.InProgress)
         {
+            if (shipController.fuel <= 0)
+            {
+                State = CommandState.UnableToComplete;
+                return true;
+            }
+
             Execute(shipController);
             if (Time.time > startTime + Duration)
             {
@@ -39,14 +41,11 @@ public class StopCommand : ICommand
         var percentComplete = timeSinceStarted / Duration;
         rigidbody.velocity = Vector2.Lerp(startVel, Vector2.zero, percentComplete);
 
-        shipController.fuel -= Time.deltaTime / Duration;
+        shipController.fuel -= FuelConsumptionMultiplier * Time.deltaTime / Duration;
     }
 
-    public override string ToString()
-    {
-        if (State == CommandState.InProgress)
-            return $">Slow down to a stop over {Duration} seconds ({(Time.time - startTime):.0#}/{Duration:.0#})";
-
+    protected override string GetDisplayText()
+    { 
         return $"Slow down to a stop over {Duration} seconds";
     }
 }

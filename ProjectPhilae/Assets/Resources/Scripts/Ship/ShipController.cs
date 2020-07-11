@@ -16,8 +16,8 @@ public class ShipController : SingletonDestructible<GameManagerController>
     }
 
     public float fuel;
-    public List<ICommand> myCommands;
-    public ICommand currentlyExecutingCommand;
+    public List<Command> myCommands;
+    public Command currentlyExecutingCommand;
 
     [SerializeField]
     private Rigidbody2D shipRigidbody;
@@ -49,9 +49,9 @@ public class ShipController : SingletonDestructible<GameManagerController>
         return shipRigidbody;
     }
 
-    public void ExecuteCommands(List<ICommand> commands)
+    public void ExecuteCommands(List<Command> commands)
     {
-        myCommands = new List<ICommand>(commands);
+        myCommands = new List<Command>(commands);
         state = ShipState.Executing;
         PopNextCommand();
     }

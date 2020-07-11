@@ -1,14 +1,8 @@
 using UnityEngine;
 
-public class WaitCommand : ICommand
+public class WaitCommand : Command
 {
-    public float Duration;
-
-    public CommandState State { get; private set; } = CommandState.Pending;
-
-    private float startTime;
-
-    public bool ExecuteTillDone(ShipController shipController)
+    public override bool ExecuteTillDone(ShipController shipController)
     {
         if (State == CommandState.Pending)
         {
@@ -28,7 +22,7 @@ public class WaitCommand : ICommand
         return false;
     }
 
-    public override string ToString()
+    protected override string GetDisplayText()
     {
         if (State == CommandState.InProgress)
             return $">Wait for {Duration} seconds ({(Time.time - startTime):.0#}/{Duration:.0#})";

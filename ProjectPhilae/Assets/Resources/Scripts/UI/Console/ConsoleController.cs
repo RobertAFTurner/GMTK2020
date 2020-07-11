@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class ConsoleController : MonoBehaviour
 { 
-  public List<ICommand> CommittedCommands;
-  public ICommand DraftCommand;
+  public List<Command> CommittedCommands;
+  public Command DraftCommand;
 
   [SerializeField] private GameObject thrustNodePrefab;
   [SerializeField] private GameObject waitNodePrefab;
@@ -45,7 +45,7 @@ public class ConsoleController : MonoBehaviour
 
   private void Start()
   {
-    CommittedCommands = new List<ICommand>();
+    CommittedCommands = new List<Command>();
     currentNodeInstance = null;
   }
 
@@ -54,7 +54,7 @@ public class ConsoleController : MonoBehaviour
   {
   }
 
-  private void SetDraftCommand<T>(T draftCommand, GameObject configPrefab) where T : ICommand
+  private void SetDraftCommand<T>(T draftCommand, GameObject configPrefab) where T : Command
   {
     ResetDraftCommand();
     Debug.Log($"Adding command: {draftCommand.GetType().Name}");
@@ -69,7 +69,7 @@ public class ConsoleController : MonoBehaviour
     currentNodeInstance = null;
   }
 
-  private void DisplayConfigPanelUi<T>(T command, GameObject prefab) where T : ICommand
+  private void DisplayConfigPanelUi<T>(T command, GameObject prefab) where T : Command
   {
     var instance = Instantiate(prefab, new Vector3(0, 0, -10), Quaternion.identity);
     instance.transform.SetParent(configPanelPlaceholder.transform, false);
