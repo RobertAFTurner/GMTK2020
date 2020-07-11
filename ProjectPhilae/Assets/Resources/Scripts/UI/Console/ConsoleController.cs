@@ -10,6 +10,7 @@ public class ConsoleController : MonoBehaviour
   [SerializeField] private GameObject thrustNodePrefab;
   [SerializeField] private GameObject waitNodePrefab;
   [SerializeField] private GameObject reverseThrustNodePrefab;
+  [SerializeField] private GameObject stopNodePrefab;
   [SerializeField] private Canvas consoleCanvas;
   [SerializeField] private GameObject configPanelPlaceholder;
 
@@ -22,20 +23,10 @@ public class ConsoleController : MonoBehaviour
   }
 
   // Triggered by Button clicks ------------
-  public void AddThrust()
-  { 
-    SetDraftCommand(new ThrustCommand(), thrustNodePrefab);
-  }
-
-  public void AddWait()
-  {
-      SetDraftCommand(new WaitCommand(), waitNodePrefab);
-    }
-
-  public void AddReverseThrust()
-  {
-      SetDraftCommand(new ReverseThrustCommand(), reverseThrustNodePrefab);
-    }
+  public void AddThrust() => SetDraftCommand(new ThrustCommand(), thrustNodePrefab);
+  public void AddWait() => SetDraftCommand(new WaitCommand(), waitNodePrefab);
+  public void AddReverseThrust() => SetDraftCommand(new ReverseThrustCommand(), reverseThrustNodePrefab);
+  public void AddStop() => SetDraftCommand(new StopCommand(), stopNodePrefab);
 
   public void AddCommandToList()
   {
