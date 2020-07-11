@@ -8,7 +8,6 @@ public abstract class NodeBase : MonoBehaviour
     public void DestroySelf()
     {
         originalY = this.transform.position.y;
-        scale = this.transform.localScale;
         selfDestructing = true;
     }
 
@@ -17,7 +16,6 @@ public abstract class NodeBase : MonoBehaviour
         if (selfDestructing)
         {
             this.gameObject.transform.Translate(0, Time.deltaTime*200, 0);
-            this.gameObject.transform.localScale = scale;
             if (this.transform.position.y > originalY + 500)
             {
                 selfDestructing = false;
