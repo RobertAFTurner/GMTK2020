@@ -9,6 +9,7 @@ public class ConsoleController : MonoBehaviour
   [SerializeField] private ShipController ship;
   [SerializeField] private GameObject thrustNodePrefab;
   [SerializeField] private GameObject waitNodePrefab;
+  [SerializeField] private GameObject reverseThrustNodePrefab;
   [SerializeField] private Canvas consoleCanvas;
   [SerializeField] private GameObject configPanelPlaceholder;
 
@@ -21,31 +22,25 @@ public class ConsoleController : MonoBehaviour
 
   // Triggered by Button clicks ------------
   public void AddThrust()
-  {
-    Debug.Log("Adding draft thrust");
-    var draftThrustCommand = new ThrustCommand();
-    DraftCommand = draftThrustCommand;
-    DisplayConfigPanelUi(draftThrustCommand, thrustNodePrefab);
+  { 
+    SetDraftCommand(new ThrustCommand(), thrustNodePrefab);
   }
 
   public void AddWait()
   {
-    Debug.Log("Adding draft wait");
-    var draftWaitCommand = new WaitCommand();
-    DraftCommand = draftWaitCommand;
-    DisplayConfigPanelUi(draftWaitCommand, waitNodePrefab);
+      SetDraftCommand(new WaitCommand(), waitNodePrefab);
     }
 
+  public void AddReverseThrust()
+  {
+      SetDraftCommand(new ReverseThrustCommand(), reverseThrustNodePrefab);
+    }
 
   public void AddCommandToList()
   {
     Debug.Log("Adding current command");
     CommittedCommands.Add(DraftCommand);
-
-    currentNodeInstance.GetComponent<NodeBase>().DestroySelf();
-    DraftCommand = null;
-    currentNodeInstance = null;
-    // TODO: Destroy draft command config panel 
+    ResetDraftCommand();
   }
 
   public void RemoveCommandFromList()
@@ -71,6 +66,20 @@ public class ConsoleController : MonoBehaviour
   {
   }
 
+  private void SetDraftCommand<T>(T draftCommand, GameObject configPrefab) where T : ICommand
+  {
+    ResetDraftCommand();
+    Debug.Log($"Adding command: {draftCommand.GetType().Name}");
+    DraftCommand = draftCommand;
+    DisplayConfigPanelUi(draftCommand, configPrefab);
+  }
+
+  private void ResetDraftCommand()
+  {
+    currentNodeInstance?.GetComponent<NodeBase>().DestroySelf();
+    DraftCommand = null; 
+    currentNodeInstance = null;
+  }
 
   private void DisplayConfigPanelUi<T>(T command, GameObject prefab) where T : ICommand
   {

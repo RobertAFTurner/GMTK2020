@@ -5,10 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 public class ThrustNodeController : NodeBase<ThrustCommand>
 {
-    [SerializeField]
     private Slider slider;
-
-    [SerializeField]
     private TMP_InputField input;
     
     public void OnEnable()

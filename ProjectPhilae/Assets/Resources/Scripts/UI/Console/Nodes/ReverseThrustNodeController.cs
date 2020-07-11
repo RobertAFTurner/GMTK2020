@@ -2,19 +2,28 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-public class WaitNodeController : NodeBase<WaitCommand>
+public class ReverseThrustNodeController : NodeBase<ReverseThrustCommand>
 {
+    private Slider slider;
     private TMP_InputField input;
-
+    
     public void OnEnable()
     {
         input = this.GetComponentsInChildren<TMP_InputField>().Single(c => c.name.Contains("Duration"));
         input.onValueChanged.AddListener(SetDuration);
+        
+        slider = this.GetComponentsInChildren<Slider>().Single(c => c.name.Contains("Power"));
+        slider.onValueChanged.AddListener(SetPower);
     }
 
     public void OnDisable()
     {
         input.onValueChanged.RemoveAllListeners();
+    }
+
+    private void SetPower(float power)
+    {
+        command.Power = power;
     }
 
     public void SetDuration(string value)
