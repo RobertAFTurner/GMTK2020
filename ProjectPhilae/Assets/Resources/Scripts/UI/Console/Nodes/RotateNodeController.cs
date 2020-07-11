@@ -41,4 +41,11 @@ public class RotateNodeController : NodeBase<RotateCommand>
     {
         command.Degrees = float.TryParse(value, out var parsedValue) ? parsedValue : 0f;
     }
+
+    protected override void ApplyCommandToUI()
+    {
+        degreeInput.text = command.Degrees.ToString();
+        durationInput.text = command.Duration.ToString();
+        directionInput.value = directionInput.options.IndexOf(directionInput.options.Single(o => o.text == command.Direction.ToString()));
+    }
 }

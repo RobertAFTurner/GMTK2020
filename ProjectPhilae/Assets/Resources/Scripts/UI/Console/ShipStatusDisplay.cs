@@ -19,7 +19,16 @@ public class ShipStatusDisplay : MonoBehaviour
 
         if (GameManagerController.Instance.State == GameManagerController.GameStates.Executing &&
             ShipController.Instance.currentlyExecutingCommand == null)
-            status = "OutOfControl!";
+        {
+            if (Mathf.FloorToInt(Time.time) % 2 != 0)
+            {
+                status = "OutOfControl!";
+            }
+            else
+            {
+                status = "";
+            }
+        }
 
         text.SetText($"PROBE STATUS:\r\n{status}\r\n\r\nFUEL:  {ShipController.Instance.fuel:###}/100");
     }

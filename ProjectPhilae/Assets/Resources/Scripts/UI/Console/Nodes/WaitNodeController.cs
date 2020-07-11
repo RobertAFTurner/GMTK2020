@@ -1,6 +1,4 @@
 ﻿using System.Linq;
-using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 public class WaitNodeController : NodeBase<WaitCommand>
 {
@@ -20,5 +18,10 @@ public class WaitNodeController : NodeBase<WaitCommand>
     public void SetDuration(string value)
     {
         command.Duration = float.TryParse(value, out var parsedValue) ? parsedValue : 0f;
+    }
+
+    protected override void ApplyCommandToUI()
+    {
+        input.text = command.Duration.ToString();
     }
 }
