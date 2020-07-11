@@ -1,13 +1,25 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 public class WaitNodeController : NodeBase<WaitCommand>
 {
     [SerializeField]
     private TMP_InputField input;
-    
-    public void SetDuration()
+
+    public void OnEnable()
     {
-        command.Duration = string.IsNullOrWhiteSpace(input.text) ? 0f : float.Parse(input.text);
+        input = this.GetComponentsInChildren<TMP_InputField>().Single(c => c.name.Contains("Duration"));
+        input.onValueChanged.AddListener(SetDuration);
+    }
+
+    public void OnDisable()
+    {
+        input.onValueChanged.RemoveAllListeners();
+    }
+
+    public void SetDuration(string value)
+    {
+        command.Duration = float.TryParse(value, out var parsedValue) ? parsedValue : 0f;
     }
 }

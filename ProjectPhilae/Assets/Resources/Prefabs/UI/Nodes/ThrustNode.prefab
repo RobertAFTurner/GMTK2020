@@ -702,7 +702,7 @@ GameObject:
   - component: {fileID: 8017083621023766688}
   - component: {fileID: 565613070795333666}
   m_Layer: 5
-  m_Name: Slider
+  m_Name: PowerSlider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1382,8 +1382,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a01c488212da5a41bdf8a7ee00ca35f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slider: {fileID: 565613070795333666}
-  input: {fileID: 1572838268035315527}
+  slider: {fileID: 0}
+  input: {fileID: 0}
 --- !u!1 &9218763946534528526
 GameObject:
   m_ObjectHideFlags: 0

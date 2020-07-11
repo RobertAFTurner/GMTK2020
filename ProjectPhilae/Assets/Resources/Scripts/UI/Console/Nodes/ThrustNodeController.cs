@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using System.Net.Http.Headers;
+using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 public class ThrustNodeController : NodeBase<ThrustCommand>
@@ -9,13 +11,27 @@ public class ThrustNodeController : NodeBase<ThrustCommand>
     [SerializeField]
     private TMP_InputField input;
     
-    public void SetPower()
+    public void OnEnable()
     {
-        command.Power = slider.GetComponent<Slider>().value;
+        input = this.GetComponentsInChildren<TMP_InputField>().Single(c => c.name.Contains("Duration"));
+        input.onValueChanged.AddListener(SetDuration);
+        
+        slider = this.GetComponentsInChildren<Slider>().Single(c => c.name.Contains("Power"));
+        slider.onValueChanged.AddListener(SetPower);
     }
 
-    public void SetDuration()
+    public void OnDisable()
     {
-        command.Duration = string.IsNullOrWhiteSpace(input.text) ? 0f : float.Parse(input.text);
+        input.onValueChanged.RemoveAllListeners();
+    }
+
+    private void SetPower(float power)
+    {
+        command.Power = power;
+    }
+
+    public void SetDuration(string value)
+    {
+        command.Duration = float.TryParse(value, out var parsedValue) ? parsedValue : 0f;
     }
 }
