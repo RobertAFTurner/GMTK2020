@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 3159510673752272633}
   m_Layer: 0
   m_Name: PlayerSpawnPoint
-  m_TagString: Untagged
+  m_TagString: Environment
   m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -128,7 +128,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerShipPrefab: {fileID: 5147712654438923579, guid: 2e0eef28dc3f0364ca676dc48f0c7391,
     type: 3}
-  consoleController: {fileID: 0}
 --- !u!61 &3159510673752272633
 BoxCollider2D:
   m_ObjectHideFlags: 0

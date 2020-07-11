@@ -94,10 +94,15 @@ public class GameManagerController : Singleton<GameManagerController>
         }
     }
 
+    public void LoadLevel()
+    {
+        SceneManager.LoadScene($"Level_{currentLevel}", LoadSceneMode.Single);
+        Load();
+    }
+
     private void LoadNextLevel()
     {
         currentLevel++;
-        SceneManager.LoadScene($"Level_{currentLevel}", LoadSceneMode.Single);
-        Load();
+        LoadLevel();
     }
 }

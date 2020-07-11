@@ -26,6 +26,11 @@ public class ShipController : SingletonDestructible<GameManagerController>
 
     void Start()
     {
+        Load();
+    }
+
+    private void Load()
+    {
         fuel = 100f;
         state = ShipState.WaitingToLaunch;
         shipRigidbody = GetComponent<Rigidbody2D>();
@@ -62,5 +67,22 @@ public class ShipController : SingletonDestructible<GameManagerController>
 
         if (currentlyExecutingCommand != null)
             myCommands.RemoveAt(0);
+    }
+
+    public void ReturnToSpawnPoint()
+    {
+        Load();
+        var spawnPoint = GameObject.Find("PlayerSpawnPoint");
+        transform.position = spawnPoint.transform.position;
+        shipRigidbody.velocity = Vector2.zero;
+    }
+
+    public void OnCollisionEnter2D(Collision2D other)
+    {
+        if(other.gameObject.tag == "Environment")
+        {
+            Debug.Log("Boom - you died");
+            GameManagerController.Instance.LoadLevel();
+        }
     }
 }
