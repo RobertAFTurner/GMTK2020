@@ -1,28 +1,28 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class ThrustNodeController : MonoBehaviour
+﻿using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+public class ThrustNodeController : NodeBase
 {
     private ThrustCommand command;
+    
+    [SerializeField]
+    private Slider slider;
+
+    [SerializeField]
+    private TMP_InputField input;
 
     public void SetThrustCommand(ThrustCommand thrustCommand)
     {
         command = thrustCommand;
     }
 
-    // Start is called before the first frame update
-    void Start()
+    public void SetPower()
     {
-
+        command.Power = slider.GetComponent<Slider>().value;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SetDuration()
     {
-
+        command.Duration = float.Parse(input.text);
     }
-
-
-
 }
