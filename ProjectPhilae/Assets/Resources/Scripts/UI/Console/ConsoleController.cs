@@ -3,14 +3,15 @@ using UnityEngine;
 
 public class ConsoleController : MonoBehaviour
 { 
-  public List<ICommand> committedCommands;
+  public List<ICommand> CommittedCommands;
+  public ICommand DraftCommand;
 
   [SerializeField] private ShipController ship;
   [SerializeField] private GameObject thrustNode;
   [SerializeField] private Canvas consoleCanvas;
+  [SerializeField] private GameObject configPanelPlaceholder;
 
   private GameObject currentNodeInstance;
-  private ICommand draftCommand;
 
   public void SetShip(ShipController ship)
   {
@@ -22,16 +23,16 @@ public class ConsoleController : MonoBehaviour
   {
     Debug.Log("Adding draft thrust");
     var draftThrustCommand = new ThrustCommand();
-    draftCommand = new ThrustCommand();
+    DraftCommand = new ThrustCommand();
     // TODO: Instantiate ThrustCommand config pannel and pass the ThrustCommand to it to work on.
-    DisplayThrustUI((ThrustCommand)draftCommand);
+    DisplayThrustUI((ThrustCommand)DraftCommand);
   }
 
   public void AddWait()
   {
     Debug.Log("Adding draft wait");
     var draftWaitCommand = new WaitCommand();
-    draftCommand = new WaitCommand();
+    DraftCommand = new WaitCommand();
     // TODO: Instantiate Command config pannel and pass the Command to it to work on.
   }
 
@@ -39,10 +40,10 @@ public class ConsoleController : MonoBehaviour
   public void AddCommandToList()
   {
     Debug.Log("Adding current command");
-    committedCommands.Add(draftCommand);
+    CommittedCommands.Add(DraftCommand);
 
     currentNodeInstance.GetComponent<NodeBase>().DestroySelf();
-    draftCommand = null;
+    DraftCommand = null;
     currentNodeInstance = null;
     // TODO: Destroy draft command config panel 
   }
@@ -50,18 +51,18 @@ public class ConsoleController : MonoBehaviour
   public void RemoveCommandFromList()
   {
     Debug.Log("Adding current command");
-    committedCommands.RemoveAt(committedCommands.Count - 1);
+    CommittedCommands.RemoveAt(CommittedCommands.Count - 1);
   }
 
   public void Execute()
   {
     Debug.Log("Executing commands");
-    ship.ExecuteCommands(committedCommands);
+    ship.ExecuteCommands(CommittedCommands);
   }
 
   private void Start()
   {
-    committedCommands = new List<ICommand>();
+    CommittedCommands = new List<ICommand>();
     currentNodeInstance = null;
   }
 
@@ -74,8 +75,7 @@ public class ConsoleController : MonoBehaviour
   private void DisplayThrustUI(ThrustCommand command)
   {
     var instance = Instantiate(thrustNode, new Vector3(0, 0, -10), Quaternion.identity);
-    instance.transform.SetParent(consoleCanvas.transform);
-    instance.GetComponent<RectTransform>().anchoredPosition = new Vector3(700, -300, -10);
+    instance.transform.SetParent(configPanelPlaceholder.transform, false);
     instance.GetComponent<ThrustNodeController>().SetThrustCommand(command);
     currentNodeInstance = instance;
   }

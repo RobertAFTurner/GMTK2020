@@ -16,7 +16,7 @@ public class CommandDisplay : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        var output = $"{string.Join(Environment.NewLine, ConsoleController.committedCommands)}{Environment.NewLine}>_";
+        var output = $"{string.Join(Environment.NewLine, ConsoleController.CommittedCommands)}{Environment.NewLine}>_";
 
         text.SetText(output);
     }
