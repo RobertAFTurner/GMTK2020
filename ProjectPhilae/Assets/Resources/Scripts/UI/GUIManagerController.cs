@@ -14,8 +14,11 @@ public class GUIManagerController : Singleton<GUIManagerController>
 
     public void ShowWinPanel(bool active, int score, float multiplier, float fuel)
     {
-        winPanel.SetScore(score, multiplier, fuel);
-        winPanel.gameObject.SetActive(active);
+        if (!winPanel.gameObject.activeSelf)
+        {
+            winPanel.SetScore(score, multiplier, fuel);
+            winPanel.gameObject.SetActive(active);
+        }
     }
 
 }
