@@ -18,6 +18,7 @@ public class ShipController : SingletonDestructible<ShipController>
     }
 
     public float Fuel;
+    public float StartingFuel;
     public float LaunchTime;
     public float StopTime;
     public Command CurrentlyExecutingCommand;
@@ -34,7 +35,7 @@ public class ShipController : SingletonDestructible<ShipController>
     [SerializeField] public ParticleSystem stopLeftSystem;
     [SerializeField] public ParticleSystem stopRightSystem;
 
-    private ShipState state;
+    public ShipState State { get; private set; }
 
     void Start()
     {
@@ -44,25 +45,29 @@ public class ShipController : SingletonDestructible<ShipController>
     private void Load()
     {
         LaunchTime = 0f;
-        Fuel = 100f;
-        state = ShipState.WaitingToLaunch;
+        StartingFuel = FindObjectOfType<LevelData>().StartingFuel;
+        Fuel = StartingFuel;
+        State = ShipState.WaitingToLaunch;
         shipRigidbody = GetComponent<Rigidbody2D>();
     }
 
     public void Stop()
     {
-        if (state != ShipState.Stopped)
+        if (State != ShipState.Stopped)
         {
             StopTime = Time.time;
-            state = ShipState.Stopped;
+            State = ShipState.Stopped;
             shipRigidbody.velocity = Vector2.zero;
         }
     }
 
     void FixedUpdate()
     {
-        if (state == ShipState.Executing)
+        if (State == ShipState.Executing)
         {
+            if (Fuel < 0f)
+                Fuel = 0f;
+
             if (LaunchTime < 0.5f)
                 LaunchTime = Time.time;
 
@@ -70,7 +75,7 @@ public class ShipController : SingletonDestructible<ShipController>
             {
                 PopNextCommand();
                 if (CurrentlyExecutingCommand == null)
-                    state = ShipState.OutOfControl;
+                    State = ShipState.OutOfControl;
             }
         }
     }
@@ -83,7 +88,7 @@ public class ShipController : SingletonDestructible<ShipController>
     public void ExecuteCommands(List<Command> commands)
     {
         myCommands = new List<Command>(commands);
-        state = ShipState.Executing;
+        State = ShipState.Executing;
         PopNextCommand();
     }
 

@@ -15,10 +15,25 @@ public class ShipStatusDisplay : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        var status = GameManagerController.Instance.State.ToString();
+
+        if (GameManagerController.Instance.State == GameManagerController.GameStates.Executing &&
+            ShipController.Instance.State == ShipController.ShipState.OutOfControl)
+        {
+            if (Mathf.FloorToInt(Time.time) % 2 != 0)
+            {
+                status = "<color=red>OutOfControl!</color>";
+            }
+            else
+            {
+                status = "";
+            }
+        }
+
         var fuelText = ShipController.Instance.Fuel <= 30f
             ? $"<color=red>{ShipController.Instance.Fuel:###}</color>"
             : $"{ShipController.Instance.Fuel:###}";
 
-        text.SetText($"PROBE STATUS:\r\n{GameManagerController.Instance.State}\r\n\r\nFUEL:  {fuelText}/100");
+        text.SetText($"PROBE STATUS:\r\n{status}\r\n\r\nFUEL:  {fuelText}/{ShipController.Instance.StartingFuel}");
     }
 }

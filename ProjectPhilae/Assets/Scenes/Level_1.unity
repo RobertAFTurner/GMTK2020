@@ -1643,9 +1643,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5036ca89d968ba746ac2821c6c2c7413, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FiveStarScore: 0
-  OneStarScore: 0
-  StartingFuel: 0
+  FiveStarScore: 90000
+  OneStarScore: 50000
+  StartingFuel: 100
   ExcludedCommands: 
 --- !u!1 &1496913435
 GameObject:
