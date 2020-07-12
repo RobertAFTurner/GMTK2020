@@ -50,18 +50,18 @@ public class ConsoleController : MonoBehaviour
     {
         var buttons = FindObjectsOfType<Button>();
 
-        buttons.Single(b => b.gameObject.name == "ThrustButton").onClick.RemoveAllListeners();
-        buttons.Single(b => b.gameObject.name.Contains("Wait")).onClick.RemoveAllListeners();
-        buttons.Single(b => b.gameObject.name.Contains("ReverseThrust")).onClick.RemoveAllListeners();
-        buttons.Single(b => b.gameObject.name.Contains("Stop")).onClick.RemoveAllListeners();
-        buttons.Single(b => b.gameObject.name.Contains("Rotate")).onClick.RemoveAllListeners();
+        buttons.SingleOrDefault(b => b.gameObject.name == "ThrustButton")?.onClick.RemoveAllListeners();
+        buttons.SingleOrDefault(b => b.gameObject.name.Contains("Wait"))?.onClick.RemoveAllListeners();
+        buttons.SingleOrDefault(b => b.gameObject.name.Contains("ReverseThrust"))?.onClick.RemoveAllListeners();
+        buttons.SingleOrDefault(b => b.gameObject.name.Contains("Stop"))?.onClick.RemoveAllListeners();
+        buttons.SingleOrDefault(b => b.gameObject.name.Contains("Rotate"))?.onClick.RemoveAllListeners();
 
-        buttons.Single(b => b.gameObject.name.Contains("Done")).onClick.RemoveAllListeners();
-        buttons.Single(b => b.gameObject.name.Contains("Execute")).onClick.RemoveAllListeners();
-        buttons.Single(b => b.gameObject.name.Contains("Remove")).onClick.RemoveAllListeners();
-        buttons.Single(b => b.gameObject.name.Contains("Up")).onClick.RemoveAllListeners();
-        buttons.Single(b => b.gameObject.name.Contains("Down")).onClick.RemoveAllListeners();
-        buttons.Single(b => b.gameObject.name.Contains("Abort")).onClick.RemoveAllListeners();
+        buttons.SingleOrDefault(b => b.gameObject.name.Contains("Done"))?.onClick.RemoveAllListeners();
+        buttons.SingleOrDefault(b => b.gameObject.name.Contains("Execute"))?.onClick.RemoveAllListeners();
+        buttons.SingleOrDefault(b => b.gameObject.name.Contains("Remove"))?.onClick.RemoveAllListeners();
+        buttons.SingleOrDefault(b => b.gameObject.name.Contains("Up"))?.onClick.RemoveAllListeners();
+        buttons.SingleOrDefault(b => b.gameObject.name.Contains("Down"))?.onClick.RemoveAllListeners();
+        buttons.SingleOrDefault(b => b.gameObject.name.Contains("Abort"))?.onClick.RemoveAllListeners();
     }
 
     public void Start()
