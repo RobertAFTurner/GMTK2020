@@ -88,6 +88,7 @@ public class ConsoleController : MonoBehaviour
 
     public void CommitCommand()
     {
+        AudioManagerController.Instance.PlaySound("KeyPress");
         if (DraftCommand == null)
         {
             if (Commands.Count == 0)
@@ -103,6 +104,7 @@ public class ConsoleController : MonoBehaviour
 
     public void RemoveCommandFromList()
     {
+        AudioManagerController.Instance.PlaySound("KeyPress");
         if (Commands.Count == 0)
         {
             if (Commands.Count == 0)
@@ -110,7 +112,6 @@ public class ConsoleController : MonoBehaviour
 
             return;
         }
-
 
         Debug.Log("Removing command");
         if (selectedCommandIndex.HasValue)
@@ -138,6 +139,7 @@ public class ConsoleController : MonoBehaviour
 
         Debug.Log("Executing commands");
         GameManagerController.Instance.StartExecution();
+        AudioManagerController.Instance.PlaySound("Execute");
         ShipController.Instance.ExecuteCommands(Commands);
     }
 
@@ -153,6 +155,7 @@ public class ConsoleController : MonoBehaviour
 
     public void Abort()
     {
+        AudioManagerController.Instance.PlaySound("Abort");
         ShipController.Instance.Stop();
         GameManagerController.Instance.LoadLevel(true);
     }

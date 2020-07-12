@@ -38,6 +38,7 @@ public class StopCommand : Command
             State = CommandState.InProgress;
             startTime = Time.time;
             startVel = shipController.GetRigidBody().velocity;
+            AudioManagerController.Instance.PlaySound("Booster");
         }
 
         if (State == CommandState.InProgress)
@@ -56,6 +57,7 @@ public class StopCommand : Command
             {
                 StopParticles(shipController);
                 State = CommandState.Done;
+                AudioManagerController.Instance.StopSound("Booster");
                 return true;
             }
         }

@@ -25,11 +25,14 @@ public class AudioManagerController : Singleton<AudioManagerController>
         PlaySound("MainTheme");
     }
 
-    public void PlaySound(string soundName, float delay = 0f)
+    public void PlaySound(string soundName, float delay = 0f, float customPitch = 0f)
     {
         ValidateSoundName(soundName);
 
         var sound = Array.Find(sounds, s => s.name == soundName);
+
+        if(customPitch != 0f)
+            sound.Source.pitch = customPitch;
 
         if (delay == 0f)
             sound.Source.Play();

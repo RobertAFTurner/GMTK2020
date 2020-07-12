@@ -52,12 +52,13 @@ public class RotateCommand : Command
             startTime = Time.time;
             startAngle = shipController.GetRigidBody().rotation;
             targetAngle = startAngle + Degrees * (Direction == AngularDirection.Clockwise ? -1f : 1f);
+            AudioManagerController.Instance.PlaySound("Booster");
         }
 
         if (State == CommandState.InProgress)
         {
             StartParticles(shipController);
-            
+
             if (shipController.Fuel <= 0)
             {
                 StopParticles(shipController);
@@ -71,6 +72,7 @@ public class RotateCommand : Command
             {
                 StopParticles(shipController);
                 State = CommandState.Done;
+                AudioManagerController.Instance.StopSound("Booster");
                 return true;
             }
         }

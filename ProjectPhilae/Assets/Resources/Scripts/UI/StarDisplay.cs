@@ -31,9 +31,12 @@ public class StarDisplay : MonoBehaviour
     void Update()
     {
         if (displayedStars < starCount && Time.time - lastTimeStep > timeStep)
-        {
+        {            
             displayedStars++;
             image.sizeDelta = new Vector2((displayedStars-1)*100f, originalSize.y);
+            var pitchIncrease = displayedStars / 5f;
+            AudioManagerController.Instance.PlaySound("Star", 0f, 1f + pitchIncrease);
+
             lastTimeStep = Time.time;
 
             if (displayedStars == 5)
@@ -44,6 +47,7 @@ public class StarDisplay : MonoBehaviour
                 starEffect = Instantiate(StarEffectPrefab, v, Quaternion.identity).GetComponent<ParticleSystem>();
                 starEffect.gameObject.SetActive(true);
                 starEffect.Play();
+                AudioManagerController.Instance.PlaySound("FiveStars");
             }
         }
 

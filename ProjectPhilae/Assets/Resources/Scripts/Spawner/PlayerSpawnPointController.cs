@@ -30,4 +30,16 @@ public class PlayerSpawnPointController : MonoBehaviour
             rocketRigifBody.AddForce(-rocketRigifBody.transform.up * 1);
         }
     }
+
+    public void Reset()
+    {
+            var rightRigidbody = rightCap.GetComponent<Rigidbody2D>();
+            rightRigidbody.velocity = Vector2.zero;
+
+            var leftRigidbody = leftCap.GetComponent<Rigidbody2D>();
+            leftRigidbody.velocity= Vector2.zero;
+
+            var rocketRigifBody = rocket.GetComponent<Rigidbody2D>();
+            rocketRigifBody.AddForce(-rocketRigifBody.transform.up * 1);
+    }
 }
