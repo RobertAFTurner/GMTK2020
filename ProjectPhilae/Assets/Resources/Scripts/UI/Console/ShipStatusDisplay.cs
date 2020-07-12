@@ -18,7 +18,7 @@ public class ShipStatusDisplay : MonoBehaviour
         var status = GameManagerController.Instance.State.ToString();
 
         if (GameManagerController.Instance.State == GameManagerController.GameStates.Executing &&
-            ShipController.Instance.State == ShipController.ShipState.OutOfControl)
+            ShipController.Instance.State == ShipState.OutOfControl)
         {
             if (Mathf.FloorToInt(Time.time) % 2 != 0)
             {

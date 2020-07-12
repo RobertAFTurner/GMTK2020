@@ -4,18 +4,18 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+public enum ShipState
+{
+    WaitingToLaunch,
+    Executing,
+    OutOfControl,
+    Stopped
+}
+
 [RequireComponent(typeof(Rigidbody2D))]
 public class ShipController : SingletonDestructible<ShipController>
 {
     public static ShipController Instance => (ShipController)instance;
-
-    public enum ShipState
-    {
-        WaitingToLaunch,
-        Executing,
-        OutOfControl,
-        Stopped
-    }
 
     public float Fuel;
     public float StartingFuel;
@@ -110,7 +110,7 @@ public class ShipController : SingletonDestructible<ShipController>
 
     public void OnCollisionEnter2D(Collision2D other)
     {
-        if(other.gameObject.tag == "Environment")
+        if (other.gameObject.tag == "Environment")
         {
             Debug.Log("Boom - you died");
             Stop();
