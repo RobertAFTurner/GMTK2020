@@ -1,10 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 public class StarDisplay : MonoBehaviour
 {
+    [SerializeField]
+    private GameObject StarEffectPrefab;
+
+    private ParticleSystem starEffect;
     private int starCount;
     private int displayedStars;
     private float timeStep = 0.5f;
@@ -32,6 +33,25 @@ public class StarDisplay : MonoBehaviour
             displayedStars++;
             image.sizeDelta = new Vector2(displayedStars * 100f, 100f);
             lastTimeStep = Time.time;
+
+            if (displayedStars == 5)
+            {
+                var cam = Camera.main;
+                var v = cam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, cam.nearClipPlane+10f));
+
+                starEffect = Instantiate(StarEffectPrefab, v, Quaternion.identity).GetComponent<ParticleSystem>();
+                starEffect.gameObject.SetActive(true);
+                starEffect.Play();
+            }
+        }
+
+        if (starEffect != null)
+        {
+            if (!starEffect.IsAlive())
+            {
+                //Destroy(starEffect.gameObject);
+                //starEffect = null;
+            }
         }
     }
 }
