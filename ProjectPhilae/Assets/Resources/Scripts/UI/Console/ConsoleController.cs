@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ConsoleController : MonoBehaviour
 {
@@ -20,8 +22,6 @@ public class ConsoleController : MonoBehaviour
     private int? selectedCommandIndex;
     private Dictionary<Type, GameObject> nodePrefabLookup;
 
-
-    // Triggered by Button clicks ------------
     public void AddThrust() => SetNewDraftCommand(new ThrustCommand(), thrustNodePrefab);
     public void AddWait() => SetNewDraftCommand(new WaitCommand(), waitNodePrefab);
     public void AddReverseThrust() => SetNewDraftCommand(new ReverseThrustCommand(), reverseThrustNodePrefab);
@@ -30,6 +30,21 @@ public class ConsoleController : MonoBehaviour
 
     public void Start()
     {
+        var buttons = FindObjectsOfType<Button>();
+
+        buttons.Single(b => b.gameObject.name == "ThrustButton").onClick.AddListener(AddThrust);
+        buttons.Single(b => b.gameObject.name.Contains("Wait")).onClick.AddListener(AddWait);
+        buttons.Single(b => b.gameObject.name.Contains("ReverseThrust")).onClick.AddListener(AddReverseThrust);
+        buttons.Single(b => b.gameObject.name.Contains("Stop")).onClick.AddListener(AddStop);
+        buttons.Single(b => b.gameObject.name.Contains("Rotate")).onClick.AddListener(AddRotate);
+
+        buttons.Single(b => b.gameObject.name.Contains("Done")).onClick.AddListener(Done);
+        buttons.Single(b => b.gameObject.name.Contains("Execute")).onClick.AddListener(Execute);
+        buttons.Single(b => b.gameObject.name.Contains("Remove")).onClick.AddListener(Remove);
+        buttons.Single(b => b.gameObject.name.Contains("Up")).onClick.AddListener(Up);
+        buttons.Single(b => b.gameObject.name.Contains("Down")).onClick.AddListener(Down);
+        buttons.Single(b => b.gameObject.name.Contains("Abort")).onClick.AddListener(Abort);
+
         nodePrefabLookup = new Dictionary<Type, GameObject>
         {
             [typeof(ThrustCommand)] = thrustNodePrefab,
@@ -48,10 +63,10 @@ public class ConsoleController : MonoBehaviour
     public void Update()
     {
         if (Input.GetKeyDown(KeyCode.DownArrow))
-            SelectDown();
+            Down();
 
         if (Input.GetKeyDown(KeyCode.UpArrow))
-            SelectUp();
+            Up();
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -62,10 +77,10 @@ public class ConsoleController : MonoBehaviour
         }
 
         if (Input.GetKeyDown(KeyCode.Delete)) //Backspace would interfere with typing || Input.GetKeyDown(KeyCode.Backspace) 
-            RemoveCommandFromList();
+            Remove();
 
         if (Input.GetKeyDown(KeyCode.Return))
-            CommitCommand();
+            Done();
 
         if (Input.GetKeyDown(KeyCode.T))
             AddThrust();
@@ -86,7 +101,7 @@ public class ConsoleController : MonoBehaviour
             GameManagerController.Instance.LoadNextLevel();
     }
 
-    public void CommitCommand()
+    public void Done()
     {
         AudioManagerController.Instance.PlaySound("KeyPress");
         if (DraftCommand == null)
@@ -102,7 +117,7 @@ public class ConsoleController : MonoBehaviour
         CloseDraftCommandNode();
     }
 
-    public void RemoveCommandFromList()
+    public void Remove()
     {
         AudioManagerController.Instance.PlaySound("KeyPress");
         if (Commands.Count == 0)
@@ -118,7 +133,7 @@ public class ConsoleController : MonoBehaviour
         {
             Commands.RemoveAt(selectedCommandIndex.Value);
             CloseDraftCommandNode(true, true);
-            //SelectUp();
+            //Up();
         }
         else if (Commands.Count > 0)
         {
@@ -135,7 +150,7 @@ public class ConsoleController : MonoBehaviour
         }
 
         if (DraftCommand != null)
-            CommitCommand();
+            Done();
 
         Debug.Log("Executing commands");
         GameManagerController.Instance.StartExecution();
@@ -143,12 +158,12 @@ public class ConsoleController : MonoBehaviour
         ShipController.Instance.ExecuteCommands(Commands);
     }
 
-    public void SelectUp()
+    public void Up()
     {
         MoveSelection(-1);
     }
 
-    public void SelectDown()
+    public void Down()
     {
         MoveSelection(1);
     }
