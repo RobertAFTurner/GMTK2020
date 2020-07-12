@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class ShipController : SingletonDestructible<GameManagerController>
+public class ShipController : SingletonDestructible<ShipController>
 {
     public static ShipController Instance => (ShipController)instance;
 
@@ -39,6 +39,7 @@ public class ShipController : SingletonDestructible<GameManagerController>
     public void Stop()
     {
         state = ShipState.Stopped;
+        shipRigidbody.velocity = Vector2.zero;
     }
 
     void FixedUpdate()
@@ -79,7 +80,7 @@ public class ShipController : SingletonDestructible<GameManagerController>
         Load();
         var spawnPoint = GameObject.Find("PlayerSpawnPoint");
         transform.position = spawnPoint.transform.position;
-        shipRigidbody.velocity = Vector2.zero;
+        Stop();
     }
 
     public void OnCollisionEnter2D(Collision2D other)

@@ -30,12 +30,13 @@ public class GameManagerController : Singleton<GameManagerController>
     void Start()
     {
         currentLevel = 1;
-        Load();
+        Load();        
     }
 
     private void Load()
     {
         State = GameStates.EnterInstructions;
+        allWaypointsCollected = false;
         levelHasPad = false;
 
         waypoints = new List<GameObject>();
@@ -67,7 +68,8 @@ public class GameManagerController : Singleton<GameManagerController>
         }
         else if (State == GameStates.Win)
         {
-            LoadNextLevel();
+            ShipController.Instance.Stop();
+            GUIManagerController.Instance.ShowWinPanel(true);      
         }
     }
 
@@ -114,6 +116,7 @@ public class GameManagerController : Singleton<GameManagerController>
 
     public void LoadLevel(bool keepCommands = false)
     {
+        GUIManagerController.Instance.ShowWinPanel(false);      
         Debug.Log($"Load level, keep commands: {keepCommands}");
         if (keepCommands)
         {
@@ -128,8 +131,14 @@ public class GameManagerController : Singleton<GameManagerController>
         reload = true;
     }
 
-    private void LoadNextLevel()
+    public void LoadNextLevel()
     {
+        if(prevCommands.Any())
+        {
+            prevCommands.Clear();
+            prevCommands = null;
+        } 
+
         currentLevel++;
         LoadLevel();
     }
