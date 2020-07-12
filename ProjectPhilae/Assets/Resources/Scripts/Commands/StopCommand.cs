@@ -13,6 +13,24 @@ public class StopCommand : Command
     
     private Vector2 startVel;
 
+    private void StartParticles(ShipController shipController)
+    {
+        if (!shipController.stopLeftSystem.isPlaying)
+            shipController.stopLeftSystem.Play();
+
+        if (!shipController.stopRightSystem.isPlaying)
+            shipController.stopRightSystem.Play(); 
+    }
+
+    private void StopParticles(ShipController shipController)
+    {
+        if (shipController.stopLeftSystem.isPlaying)
+            shipController.stopLeftSystem.Stop();
+
+        if (shipController.stopRightSystem.isPlaying)
+            shipController.stopRightSystem.Stop(); 
+    }
+
     public override bool ExecuteTillDone(ShipController shipController)
     {
         if (State == CommandState.Pending)
@@ -24,8 +42,11 @@ public class StopCommand : Command
 
         if (State == CommandState.InProgress)
         {
+            StartParticles(shipController);
+
             if (shipController.fuel <= 0)
             {
+                StopParticles(shipController);
                 State = CommandState.UnableToComplete;
                 return true;
             }
@@ -33,6 +54,7 @@ public class StopCommand : Command
             Execute(shipController);
             if (Time.time > startTime + Duration)
             {
+                StopParticles(shipController);
                 State = CommandState.Done;
                 return true;
             }
