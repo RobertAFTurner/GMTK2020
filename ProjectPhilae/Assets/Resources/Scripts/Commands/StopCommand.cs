@@ -44,7 +44,7 @@ public class StopCommand : Command
         {
             StartParticles(shipController);
 
-            if (shipController.fuel <= 0)
+            if (shipController.Fuel <= 0)
             {
                 StopParticles(shipController);
                 State = CommandState.UnableToComplete;
@@ -70,7 +70,7 @@ public class StopCommand : Command
         var percentComplete = timeSinceStarted / Duration;
         rigidbody.velocity = Vector2.Lerp(startVel, Vector2.zero, percentComplete);
 
-        shipController.fuel -= FuelConsumptionMultiplier * Time.deltaTime / Duration;
+        shipController.Fuel -= FuelConsumptionMultiplier * Time.deltaTime / Duration;
     }
 
     protected override string GetDisplayText()

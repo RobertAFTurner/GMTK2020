@@ -58,7 +58,7 @@ public class RotateCommand : Command
         {
             StartParticles(shipController);
             
-            if (shipController.fuel <= 0)
+            if (shipController.Fuel <= 0)
             {
                 StopParticles(shipController);
                 State = CommandState.UnableToComplete;
@@ -86,7 +86,7 @@ public class RotateCommand : Command
         //var angle = Mathf.SmoothDampAngle(rigidbody.rotation, targetAngle, ref currentVelocity, Duration/2, float.MaxValue, Time.deltaTime);
         rigidbody.MoveRotation(angle);
 
-        shipController.fuel -= FuelConsumptionMultiplier * Time.deltaTime / Duration;
+        shipController.Fuel -= FuelConsumptionMultiplier * Time.deltaTime / Duration;
     }
 
     protected override string GetDisplayText()

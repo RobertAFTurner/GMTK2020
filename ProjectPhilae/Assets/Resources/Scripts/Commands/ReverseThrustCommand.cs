@@ -43,7 +43,7 @@ public class ReverseThrustCommand : Command
         if (State == CommandState.InProgress)
         {
             StartParticles(shipController);
-            if (shipController.fuel <= 0)
+            if (shipController.Fuel <= 0)
             {
                 StopParticles(shipController);
                 State = CommandState.UnableToComplete;
@@ -67,7 +67,7 @@ public class ReverseThrustCommand : Command
     {
         var rigidbody = shipController.GetRigidBody();
         rigidbody.AddForce(rigidbody.transform.up * Power * -1f);
-        shipController.fuel -= FuelConsumptionMultiplier * Power * Time.deltaTime;
+        shipController.Fuel -= FuelConsumptionMultiplier * Power * Time.deltaTime;
     }
 
     protected override string GetDisplayText()

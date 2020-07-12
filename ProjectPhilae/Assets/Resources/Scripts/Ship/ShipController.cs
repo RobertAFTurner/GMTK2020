@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -12,12 +13,16 @@ public class ShipController : SingletonDestructible<ShipController>
     {
         WaitingToLaunch,
         Executing,
+        OutOfControl,
         Stopped
     }
 
-    public float fuel;
-    public List<Command> myCommands;
-    public Command currentlyExecutingCommand;
+    public float Fuel;
+    public float LaunchTime;
+    public float StopTime;
+    public Command CurrentlyExecutingCommand;
+
+    private List<Command> myCommands;
 
     [SerializeField]
     private Rigidbody2D shipRigidbody;
@@ -37,26 +42,34 @@ public class ShipController : SingletonDestructible<ShipController>
 
     private void Load()
     {
-        fuel = 100f;
+        LaunchTime = 0f;
+        Fuel = 100f;
         state = ShipState.WaitingToLaunch;
         shipRigidbody = GetComponent<Rigidbody2D>();
     }
 
     public void Stop()
     {
-        state = ShipState.Stopped;
-        shipRigidbody.velocity = Vector2.zero;
+        if (state != ShipState.Stopped)
+        {
+            StopTime = Time.time;
+            state = ShipState.Stopped;
+            shipRigidbody.velocity = Vector2.zero;
+        }
     }
 
     void FixedUpdate()
     {
         if (state == ShipState.Executing)
         {
-            if (currentlyExecutingCommand.ExecuteTillDone(this))
+            if (LaunchTime < 0.5f)
+                LaunchTime = Time.time;
+
+            if (CurrentlyExecutingCommand.ExecuteTillDone(this))
             {
                 PopNextCommand();
-                if (currentlyExecutingCommand == null)
-                    state = ShipState.Stopped;
+                if (CurrentlyExecutingCommand == null)
+                    state = ShipState.OutOfControl;
             }
         }
     }
@@ -75,9 +88,9 @@ public class ShipController : SingletonDestructible<ShipController>
 
     private void PopNextCommand()
     {
-        currentlyExecutingCommand = myCommands.FirstOrDefault();
+        CurrentlyExecutingCommand = myCommands.FirstOrDefault();
 
-        if (currentlyExecutingCommand != null)
+        if (CurrentlyExecutingCommand != null)
             myCommands.RemoveAt(0);
     }
 

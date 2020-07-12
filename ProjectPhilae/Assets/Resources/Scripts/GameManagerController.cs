@@ -69,8 +69,23 @@ public class GameManagerController : Singleton<GameManagerController>
         else if (State == GameStates.Win)
         {
             ShipController.Instance.Stop();
-            GUIManagerController.Instance.ShowWinPanel(true);      
+            var speedMultiplier = CalculateSpeedMultiplier();
+            var fuelMultiplier = CalculateFuelMultiplier();
+            var score = Mathf.RoundToInt(fuelMultiplier * speedMultiplier);
+
+            GUIManagerController.Instance.ShowWinPanel(true, score, speedMultiplier, fuelMultiplier);      
         }
+    }
+
+    private float CalculateFuelMultiplier()
+    {
+        return 100f + Mathf.Round(ShipController.Instance.Fuel);
+    }
+
+    private float CalculateSpeedMultiplier()
+    {
+        var time = ShipController.Instance.StopTime - ShipController.Instance.LaunchTime;
+        return 100f + Mathf.Round(400f - time);
     }
 
     private IEnumerator LateLoad()
@@ -116,7 +131,7 @@ public class GameManagerController : Singleton<GameManagerController>
 
     public void LoadLevel(bool keepCommands = false)
     {
-        GUIManagerController.Instance.ShowWinPanel(false);      
+        GUIManagerController.Instance.HideWinPanel();      
         Debug.Log($"Load level, keep commands: {keepCommands}");
         if (keepCommands)
         {

@@ -5,11 +5,17 @@ public class GUIManagerController : Singleton<GUIManagerController>
 {
     public static GUIManagerController Instance => (GUIManagerController)instance;
 
-    [SerializeField] GameObject winPanel;
+    [SerializeField] WinPanelController winPanel;
 
-    public void ShowWinPanel(bool active)
+    public void HideWinPanel()
     {
-        winPanel.SetActive(active);
+        winPanel.gameObject.SetActive(false);
+    }
+
+    public void ShowWinPanel(bool active, int score, float multiplier, float fuel)
+    {
+        winPanel.SetScore(score, multiplier, fuel);
+        winPanel.gameObject.SetActive(active);
     }
 
 }
