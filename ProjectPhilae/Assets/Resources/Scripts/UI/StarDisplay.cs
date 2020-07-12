@@ -45,6 +45,7 @@ public class StarDisplay : MonoBehaviour
                 starEffect = Instantiate(StarEffectPrefab, v, Quaternion.identity).GetComponent<ParticleSystem>();
                 starEffect.gameObject.SetActive(true);
                 starEffect.Play();
+                AudioManagerController.Instance.PlaySound("FiveStars");
             }
         }
 

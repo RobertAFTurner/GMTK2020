@@ -1718,6 +1718,11 @@ MonoBehaviour:
     volume: 0.582
     pitch: 1.54
     loop: 1
+  - name: FiveStars
+    clip: {fileID: 8300000, guid: ad90c72fc7ce16040918dfd052a37c25, type: 3}
+    volume: 0.582
+    pitch: 1.2
+    loop: 0
 --- !u!4 &1477613918
 Transform:
   m_ObjectHideFlags: 0
