@@ -24,6 +24,18 @@ public class ThrustCommand : Command
 
         if (State == CommandState.InProgress)
         {
+            if(!shipController.thrustSystem.isPlaying)
+            {
+                var main = shipController.thrustSystem.main;
+                main.startSpeed = Power / 10;
+
+                var emmision = shipController.thrustSystem.emission;
+                emmision.rateOverTime = Power * 5;
+
+                shipController.thrustSystem.Play();
+            } 
+                
+            
             if (shipController.fuel <= 0)
             {
                 State = CommandState.UnableToComplete;
@@ -34,6 +46,9 @@ public class ThrustCommand : Command
 
             if (Time.time > startTime + Duration)
             {
+                if (shipController.thrustSystem.isPlaying)
+                    shipController.thrustSystem.Stop();
+
                 State = CommandState.Done;
                 return true;
             }
