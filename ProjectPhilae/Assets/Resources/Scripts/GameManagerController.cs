@@ -162,4 +162,9 @@ public class GameManagerController : Singleton<GameManagerController>
     {
         return prevCommands;
     }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 }
