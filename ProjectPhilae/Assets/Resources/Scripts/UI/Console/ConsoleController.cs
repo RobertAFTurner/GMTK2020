@@ -28,7 +28,7 @@ public class ConsoleController : MonoBehaviour
     public void AddStop() => SetNewDraftCommand(new StopCommand(), stopNodePrefab);
     public void AddRotate() => SetNewDraftCommand(new RotateCommand(), rotateNodePrefab);
 
-    public void Start()
+    public void OnEnable()
     {
         var buttons = FindObjectsOfType<Button>();
 
@@ -44,7 +44,28 @@ public class ConsoleController : MonoBehaviour
         buttons.Single(b => b.gameObject.name.Contains("Up")).onClick.AddListener(Up);
         buttons.Single(b => b.gameObject.name.Contains("Down")).onClick.AddListener(Down);
         buttons.Single(b => b.gameObject.name.Contains("Abort")).onClick.AddListener(Abort);
+    }
 
+    public void OnDisable()
+    {
+        var buttons = FindObjectsOfType<Button>();
+
+        buttons.Single(b => b.gameObject.name == "ThrustButton").onClick.RemoveAllListeners();
+        buttons.Single(b => b.gameObject.name.Contains("Wait")).onClick.RemoveAllListeners();
+        buttons.Single(b => b.gameObject.name.Contains("ReverseThrust")).onClick.RemoveAllListeners();
+        buttons.Single(b => b.gameObject.name.Contains("Stop")).onClick.RemoveAllListeners();
+        buttons.Single(b => b.gameObject.name.Contains("Rotate")).onClick.RemoveAllListeners();
+
+        buttons.Single(b => b.gameObject.name.Contains("Done")).onClick.RemoveAllListeners();
+        buttons.Single(b => b.gameObject.name.Contains("Execute")).onClick.RemoveAllListeners();
+        buttons.Single(b => b.gameObject.name.Contains("Remove")).onClick.RemoveAllListeners();
+        buttons.Single(b => b.gameObject.name.Contains("Up")).onClick.RemoveAllListeners();
+        buttons.Single(b => b.gameObject.name.Contains("Down")).onClick.RemoveAllListeners();
+        buttons.Single(b => b.gameObject.name.Contains("Abort")).onClick.RemoveAllListeners();
+    }
+
+    public void Start()
+    {
         nodePrefabLookup = new Dictionary<Type, GameObject>
         {
             [typeof(ThrustCommand)] = thrustNodePrefab,
