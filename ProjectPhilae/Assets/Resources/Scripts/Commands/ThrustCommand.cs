@@ -26,13 +26,17 @@ public class ThrustCommand : Command
             emmision.rateOverTime = Power * 5;
 
             shipController.thrustSystem.Play();
+            shipController.thrustSprite.SetActive(true);
         }
     }
 
     private void StopParticles(ShipController shipController)
     {
         if (shipController.thrustSystem.isPlaying)
+        {
             shipController.thrustSystem.Stop();
+            shipController.thrustSprite.SetActive(false);
+        }            
     }
 
     public override bool ExecuteTillDone(ShipController shipController)

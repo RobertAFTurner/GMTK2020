@@ -27,6 +27,7 @@ public class ShipController : SingletonDestructible<ShipController>
     [SerializeField]
     private Rigidbody2D shipRigidbody;
 
+    [SerializeField] public GameObject thrustSprite;
     [SerializeField] public ParticleSystem thrustSystem;
     [SerializeField] public ParticleSystem rotateClockwiseSystem;
     [SerializeField] public ParticleSystem rotateAnticlockwiseSystem;
