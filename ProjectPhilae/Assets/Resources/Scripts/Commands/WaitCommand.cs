@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class WaitCommand : Command
 {
-    public WaitCommand() : this(5f)
+    public WaitCommand() : this(2f)
     { }
 
     public WaitCommand(float duration) : base(duration)

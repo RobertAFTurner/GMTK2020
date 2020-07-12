@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ReverseThrustCommand : Command
 {
-    public ReverseThrustCommand() : this(0.1f, 5f)
+    public ReverseThrustCommand() : this(0.5f, 3f)
     {}
 
     public ReverseThrustCommand(float duration, float power) : base(duration)

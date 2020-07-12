@@ -1859,11 +1859,6 @@ PrefabInstance:
       propertyPath: configPanelPlaceholder
       value: 
       objectReference: {fileID: 1520832567}
-    - target: {fileID: 4173215564053863279, guid: 2c52e07efc1c609449ae8a0093ee54af,
-        type: 3}
-      propertyPath: gameManager
-      value: 
-      objectReference: {fileID: 932232377}
     - target: {fileID: 4173215564053863280, guid: 2c52e07efc1c609449ae8a0093ee54af,
         type: 3}
       propertyPath: m_LocalPosition.x
