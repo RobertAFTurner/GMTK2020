@@ -11,6 +11,6 @@ public class PlayerSpawnPointController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        var ship = Instantiate(playerShipPrefab, transform.position, Quaternion.identity);
+        var ship = Instantiate(playerShipPrefab, transform.position, transform.rotation);
     }
 }
