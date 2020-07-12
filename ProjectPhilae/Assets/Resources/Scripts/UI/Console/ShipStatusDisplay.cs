@@ -22,7 +22,7 @@ public class ShipStatusDisplay : MonoBehaviour
         {
             if (Mathf.FloorToInt(Time.time) % 2 != 0)
             {
-                status = "OutOfControl!";
+                status = "<color=red>OutOfControl!</color>";
             }
             else
             {
@@ -30,6 +30,10 @@ public class ShipStatusDisplay : MonoBehaviour
             }
         }
 
-        text.SetText($"PROBE STATUS:\r\n{status}\r\n\r\nFUEL:  {ShipController.Instance.fuel:###}/100");
+        var fuelText = ShipController.Instance.fuel < 20f
+            ? $"<color=red>{ShipController.Instance.fuel:###}</color>"
+            : $"{ShipController.Instance.fuel:###}";
+
+        text.SetText($"PROBE STATUS:\r\n{status}\r\n\r\nFUEL:  {fuelText}/100");
     }
 }

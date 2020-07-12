@@ -5,21 +5,22 @@ using UnityEngine.UI;
 using TMPro;
 public class ThrustNodeController : NodeBase<ThrustCommand>
 {
-    private Slider slider;
-    private TMP_InputField input;
+    private Slider powerSlider;
+    private Slider durationSlider;
     
     public void OnEnable()
     {
-        input = this.GetComponentsInChildren<TMP_InputField>().Single(c => c.name.Contains("Duration"));
-        input.onValueChanged.AddListener(SetDuration);
-
-        slider = this.GetComponentsInChildren<Slider>().Single(c => c.name.Contains("Power"));
-        slider.onValueChanged.AddListener(SetPower);
+        durationSlider = this.GetComponentsInChildren<Slider>().Single(c => c.name.Contains("Duration"));
+        durationSlider.onValueChanged.AddListener(SetDuration);
+        
+        powerSlider = this.GetComponentsInChildren<Slider>().Single(c => c.name.Contains("Power"));
+        powerSlider.onValueChanged.AddListener(SetPower);
     }
 
     public void OnDisable()
     {
-        input.onValueChanged.RemoveAllListeners();
+        durationSlider.onValueChanged.RemoveAllListeners();
+        powerSlider.onValueChanged.RemoveAllListeners();
     }
 
     private void SetPower(float power)
@@ -27,14 +28,14 @@ public class ThrustNodeController : NodeBase<ThrustCommand>
         command.Power = Mathf.Round(power);
     }
 
-    public void SetDuration(string value)
+    public void SetDuration(float value)
     {
-        command.Duration = float.TryParse(value, out var parsedValue) ? parsedValue : 0f;
+        command.Duration = Mathf.Round(value*10)/10;
     }
 
     protected override void ApplyCommandToUI()
     {
-        slider.value = command.Power;
-        input.text = command.Duration.ToString();
+        powerSlider.value = command.Power;
+        durationSlider.value = command.Duration;
     }
 }

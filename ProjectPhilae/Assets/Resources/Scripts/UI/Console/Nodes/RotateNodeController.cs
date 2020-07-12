@@ -1,51 +1,53 @@
 ﻿using System.Linq;
 using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
 using static RotateCommand;
 
 public class RotateNodeController : NodeBase<RotateCommand>
 {
-    private TMP_InputField degreeInput;
-    private TMP_InputField durationInput;
     private TMP_Dropdown directionInput;
+    private Slider degreesSlider;
+    private Slider durationSlider;
 
     public void OnEnable()
     {
-        degreeInput = this.GetComponentsInChildren<TMP_InputField>().Single(c => c.name.Contains("Degrees"));
-        degreeInput.onValueChanged.AddListener(SetDegrees);
+        durationSlider = this.GetComponentsInChildren<Slider>().Single(c => c.name.Contains("Duration"));
+        durationSlider.onValueChanged.AddListener(SetDuration);
 
-        durationInput = this.GetComponentsInChildren<TMP_InputField>().Single(c => c.name.Contains("Duration"));
-        durationInput.onValueChanged.AddListener(SetDuration);
+        degreesSlider = this.GetComponentsInChildren<Slider>().Single(c => c.name.Contains("Degree"));
+        degreesSlider.onValueChanged.AddListener(SetDegrees);
 
         directionInput = this.GetComponentsInChildren<TMP_Dropdown>().Single(c => c.name.Contains("Direction"));
         directionInput.onValueChanged.AddListener(SetDirection);
     }
 
-    private void SetDirection(int index)
+    public void OnDisable()
+    {
+        durationSlider.onValueChanged.RemoveAllListeners();
+        degreesSlider.onValueChanged.RemoveAllListeners();
+        directionInput.onValueChanged.RemoveAllListeners();
+    }
+
+    public void SetDirection(int index)
     {
         command.Direction = index == 0 ? AngularDirection.Clockwise : AngularDirection.Anticlockwise;
     }
 
-    public void OnDisable()
+    public void SetDuration(float value)
     {
-        degreeInput.onValueChanged.RemoveAllListeners();
-        durationInput.onValueChanged.RemoveAllListeners();
-        directionInput.onValueChanged.RemoveAllListeners();
+        command.Duration = Mathf.Round(value*10)/10;
     }
 
-    public void SetDuration(string value)
+    public void SetDegrees(float value)
     {
-        command.Duration = float.TryParse(value, out var parsedValue) ? parsedValue : 0f;
-    }
-
-    public void SetDegrees(string value)
-    {
-        command.Degrees = float.TryParse(value, out var parsedValue) ? parsedValue : 0f;
+        command.Degrees = Mathf.Round(value);
     }
 
     protected override void ApplyCommandToUI()
     {
-        degreeInput.text = command.Degrees.ToString();
-        durationInput.text = command.Duration.ToString();
+        degreesSlider.value = command.Degrees;
+        durationSlider.value = command.Duration;
         directionInput.value = directionInput.options.IndexOf(directionInput.options.Single(o => o.text == command.Direction.ToString()));
     }
 }

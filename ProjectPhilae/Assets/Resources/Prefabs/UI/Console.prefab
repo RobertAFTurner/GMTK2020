@@ -43,12 +43,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7df7090fd5bde14b97bbea2287077dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ship: {fileID: 0}
   thrustNodePrefab: {fileID: 9218763946017225001, guid: 19a3e7292a6385d408ca20fef3e5a851,
     type: 3}
   waitNodePrefab: {fileID: 9218763946017225001, guid: a09b77a3bcdb31746987e0fe918990ec,
     type: 3}
-  reverseThrustNodePrefab: {fileID: 9218763946017225001, guid: 8c878b5e6ac55e641a6a8b870a88adc0,
+  reverseThrustNodePrefab: {fileID: 9218763946017225001, guid: 714a2f78a30f54049a3804002f242336,
     type: 3}
   stopNodePrefab: {fileID: 9218763946017225001, guid: b908ca2a89f1816488d4717108f71c15,
     type: 3}
@@ -56,4 +55,3 @@ MonoBehaviour:
     type: 3}
   consoleCanvas: {fileID: 0}
   configPanelPlaceholder: {fileID: 0}
-  gameManager: {fileID: 0}
