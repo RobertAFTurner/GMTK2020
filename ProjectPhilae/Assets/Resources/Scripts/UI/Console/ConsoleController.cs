@@ -192,8 +192,17 @@ public class ConsoleController : MonoBehaviour
 
     public void SetNewDraftCommand<T>(T draftCommand, GameObject configPrefab) where T : Command
     {
-        Commands.Add(draftCommand);
-        selectedCommandIndex = Commands.Count - 1;
+        if (selectedCommandIndex.HasValue)
+        {
+            Commands.Insert(selectedCommandIndex.Value+1, draftCommand);
+            selectedCommandIndex++;
+        }
+        else
+        {
+            Commands.Add(draftCommand);
+            selectedCommandIndex = Commands.Count - 1;
+        }
+
         SetDraftCommand(draftCommand, configPrefab);
     }
 
