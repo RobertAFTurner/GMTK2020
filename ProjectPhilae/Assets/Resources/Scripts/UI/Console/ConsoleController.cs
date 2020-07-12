@@ -130,6 +130,9 @@ public class ConsoleController : MonoBehaviour
             return;
         }
 
+        if (DraftCommand != null)
+            CommitCommand();
+
         Debug.Log("Executing commands");
         GameManagerController.Instance.StartExecution();
         ShipController.Instance.ExecuteCommands(Commands);
