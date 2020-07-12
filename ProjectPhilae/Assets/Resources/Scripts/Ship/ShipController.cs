@@ -58,6 +58,7 @@ public class ShipController : SingletonDestructible<ShipController>
             StopTime = Time.time;
             State = ShipState.Stopped;
             shipRigidbody.velocity = Vector2.zero;
+            TurnOfAllShipSounds();
         }
     }
 
@@ -114,8 +115,13 @@ public class ShipController : SingletonDestructible<ShipController>
         {
             Debug.Log("Boom - you died");        
             Stop();
-            AudioManagerController.Instance.StopSound("Thrust");
             GameManagerController.Instance.LoadLevel(true);
         }
+    }
+
+    public void TurnOfAllShipSounds()
+    {
+        AudioManagerController.Instance.StopSound("Thrust");
+        AudioManagerController.Instance.StopSound("Booster");
     }
 }
