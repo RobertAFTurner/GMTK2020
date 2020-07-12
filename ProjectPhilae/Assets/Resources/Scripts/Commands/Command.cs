@@ -19,13 +19,13 @@ public abstract class Command
         var displayText = GetDisplayText();
 
         if (State == CommandState.Editing)
-            return $">{displayText}";
+            return $"<color=white>>{displayText}</color>";
 
         if (State == CommandState.InProgress)
-            return $">{displayText} ({(Time.time - startTime):.0}/{Duration:.0})";
+            return $"><color=#B7FF92>{displayText} ({(Time.time - startTime):.0}/{Duration:.0})</color>";
 
         if (State == CommandState.UnableToComplete)
-            return $"{displayText} FAILED - NOT ENOUGH FUEL";
+            return $"{displayText} <color=red>FAILED - NOT ENOUGH FUEL</color>";
 
         return displayText;
     }

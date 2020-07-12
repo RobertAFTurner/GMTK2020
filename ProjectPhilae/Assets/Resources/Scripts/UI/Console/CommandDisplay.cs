@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using TMPro;
 using UnityEngine;
 
@@ -18,7 +19,7 @@ public class CommandDisplay : MonoBehaviour
     {
         var output = $"{string.Join(Environment.NewLine, ConsoleController.Commands)}";
         if (!output.Contains(">"))
-            output += "\r\n>_";
+            output += "\r\n<color=white>>_</color>";
         text.SetText(output);
     }
 }
