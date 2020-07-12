@@ -133,7 +133,7 @@ public class GameManagerController : Singleton<GameManagerController>
 
     public void LoadNextLevel()
     {
-        if(prevCommands.Any())
+        if(prevCommands != null && prevCommands.Any())
         {
             prevCommands.Clear();
             prevCommands = null;
