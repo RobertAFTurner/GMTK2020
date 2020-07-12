@@ -25,7 +25,7 @@ public class WinPanelController : MonoBehaviour // Singleton<WinPanelController>
         else
         {
             var scoreAboveOneStar = score - levelData.OneStarScore;
-            var starThreshold = levelData.FiveStarScore - levelData.OneStarScore / 4f;
+            var starThreshold = (levelData.FiveStarScore - levelData.OneStarScore) / 4f;
             starCount = 1 + Mathf.FloorToInt(scoreAboveOneStar / starThreshold);
         }
 
