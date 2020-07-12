@@ -8,7 +8,7 @@ public class StarDisplay : MonoBehaviour
     private ParticleSystem starEffect;
     private int starCount;
     private int displayedStars;
-    private float timeStep = 0.5f;
+    private float timeStep = 0.3f;
     private float lastTimeStep;
     private RectTransform image;
 
@@ -47,10 +47,10 @@ public class StarDisplay : MonoBehaviour
 
         if (starEffect != null)
         {
-            if (!starEffect.IsAlive())
+            if (starEffect.isStopped)
             {
-                //Destroy(starEffect.gameObject);
-                //starEffect = null;
+                Destroy(starEffect.gameObject);
+                starEffect = null;
             }
         }
     }
