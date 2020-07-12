@@ -9,7 +9,7 @@ public class StopCommand : Command
     {
     }
 
-    private const float FuelConsumptionMultiplier = 10f;
+    private const float FuelConsumptionMultiplier = 20f;
     
     private Vector2 startVel;
 
