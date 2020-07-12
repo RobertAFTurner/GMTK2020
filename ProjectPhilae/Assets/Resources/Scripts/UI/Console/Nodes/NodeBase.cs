@@ -3,11 +3,13 @@
 public abstract class NodeBase : MonoBehaviour
 {
     private bool selfDestructing = false;
-    private float originalY;
+    private Vector3 originalPosition;
+    private Vector3 targetPosition;
 
-    public void DestroySelf()
+    public void DestroySelf(bool discard = false)
     {
-        originalY = this.transform.position.y;
+        originalPosition = this.transform.position;
+        targetPosition = this.transform.position + (discard ? Vector3.right * 500 : Vector3.up * 500);
         selfDestructing = true;
     }
 
@@ -15,8 +17,9 @@ public abstract class NodeBase : MonoBehaviour
     {
         if (selfDestructing)
         {
-            this.gameObject.transform.Translate(0, Time.deltaTime*200, 0);
-            if (this.transform.position.y > originalY + 500)
+            this.transform.position =
+                Vector3.MoveTowards(this.transform.position, targetPosition, Time.deltaTime * 500);
+            if ((targetPosition - this.transform.position).magnitude < 10f)
             {
                 selfDestructing = false;
                 Destroy(gameObject);

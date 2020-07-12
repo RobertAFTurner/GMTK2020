@@ -30,7 +30,7 @@ public class ShipStatusDisplay : MonoBehaviour
             }
         }
 
-        var fuelText = ShipController.Instance.fuel < 20f
+        var fuelText = ShipController.Instance.fuel <= 30f
             ? $"<color=red>{ShipController.Instance.fuel:###}</color>"
             : $"{ShipController.Instance.fuel:###}";
 

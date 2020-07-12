@@ -15,6 +15,7 @@ public class ConsoleController : MonoBehaviour
     [SerializeField] private GameObject rotateNodePrefab;
     [SerializeField] private Canvas consoleCanvas;
     [SerializeField] private GameObject configPanelPlaceholder;
+    private CommandDisplay commandDisplay;
     private GameObject currentNodeInstance;
     private int? selectedCommandIndex;
     private Dictionary<Type, GameObject> nodePrefabLookup;
@@ -38,8 +39,9 @@ public class ConsoleController : MonoBehaviour
             [typeof(RotateCommand)] = rotateNodePrefab,
         };
 
+        commandDisplay = FindObjectOfType<CommandDisplay>();
         var prevCommands = GameManagerController.Instance.GetPreviousCommands();
-        Commands = prevCommands != null ? prevCommands : new List<Command>();
+        Commands = prevCommands ?? new List<Command>();
         currentNodeInstance = null;
     }
 
@@ -54,22 +56,16 @@ public class ConsoleController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if (GameManagerController.Instance.State == GameManagerController.GameStates.EnterInstructions)
-            {
                 Execute();
-            }
             else
-            {
                 Abort();
-            }
         }
 
         if (Input.GetKeyDown(KeyCode.Delete)) //Backspace would interfere with typing || Input.GetKeyDown(KeyCode.Backspace) 
-        {
             RemoveCommandFromList();
-        }
 
         if (Input.GetKeyDown(KeyCode.Return))
-            CloseDraftCommandNode();
+            CommitCommand();
 
         if (Input.GetKeyDown(KeyCode.T))
             AddThrust();
@@ -89,6 +85,14 @@ public class ConsoleController : MonoBehaviour
 
     public void CommitCommand()
     {
+        if (DraftCommand == null)
+        {
+            if (Commands.Count == 0)
+                commandDisplay.SetUserPrompt("The return key closes any commands which are open for editing.\r\n\r\nNo commands entered! Insert disks to add commands");
+
+            return;
+        }
+
         selectedCommandIndex = null;
         DraftCommand.State = CommandState.Pending;
         CloseDraftCommandNode();
@@ -96,12 +100,21 @@ public class ConsoleController : MonoBehaviour
 
     public void RemoveCommandFromList()
     {
+        if (Commands.Count == 0)
+        {
+            if (Commands.Count == 0)
+                commandDisplay.SetUserPrompt("The DELETE key removes the selected command, or most recently entered command.\r\n\r\nNo commands entered! Insert disks to add commands");
+
+            return;
+        }
+
+
         Debug.Log("Removing command");
         if (selectedCommandIndex.HasValue)
         {
-            CloseDraftCommandNode(false);
             Commands.RemoveAt(selectedCommandIndex.Value);
-            SelectUp();
+            CloseDraftCommandNode(true, true);
+            //SelectUp();
         }
         else if (Commands.Count > 0)
         {
@@ -111,6 +124,12 @@ public class ConsoleController : MonoBehaviour
 
     public void Execute()
     {
+        if (Commands.Count == 0)
+        {
+            commandDisplay.SetUserPrompt("Press Execute after entering commands to upload them to the probe and launch.\r\n\r\nNo commands entered! Insert disks to add commands");
+            return;
+        }
+
         Debug.Log("Executing commands");
         GameManagerController.Instance.StartExecution();
         ShipController.Instance.ExecuteCommands(Commands);
@@ -134,13 +153,26 @@ public class ConsoleController : MonoBehaviour
 
     private void MoveSelection(int offset)
     {
+        if (Commands.Count == 0)
+        {
+            commandDisplay.SetUserPrompt("The UP/DOWN keys can be used so select and modify commands which have already been entered.\r\n\r\nNo commands entered! Insert disks to add commands");
+        }
+
         selectedCommandIndex = selectedCommandIndex.HasValue ? selectedCommandIndex + offset : Commands.Count - 1;
 
         if (selectedCommandIndex >= Commands.Count)
-            CloseDraftCommandNode();
+        {
+            if (DraftCommand != null)
+                CloseDraftCommandNode();
+
+            return;
+        }
 
         if (selectedCommandIndex < 0)
+        {
             selectedCommandIndex = 0;
+            return;
+        }
 
         if (selectedCommandIndex.HasValue)
         {
@@ -172,13 +204,13 @@ public class ConsoleController : MonoBehaviour
         DisplayConfigPanelUi(draftCommand, configPrefab);
     }
 
-    public void CloseDraftCommandNode(bool clearSelectedCommandIndex = true)
+    public void CloseDraftCommandNode(bool clearSelectedCommandIndex = true, bool discarding = false)
     {
         if (clearSelectedCommandIndex)
             selectedCommandIndex = null;
 
         DraftCommand.State = CommandState.Pending;
-        currentNodeInstance?.GetComponent<NodeBase>().DestroySelf();
+        currentNodeInstance?.GetComponent<NodeBase>().DestroySelf(discarding);
         currentNodeInstance = null;
     }
 
