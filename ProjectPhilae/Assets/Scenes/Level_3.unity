@@ -1053,8 +1053,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5036ca89d968ba746ac2821c6c2c7413, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FiveStarScore: 90000
-  OneStarScore: 50000
+  FiveStarScore: 88700
+  OneStarScore: 88000
   StartingFuel: 100
   ExcludedCommands: 
 --- !u!4 &1763247317

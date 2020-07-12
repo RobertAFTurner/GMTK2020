@@ -81,6 +81,9 @@ public class ConsoleController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.S))
             AddStop();
+
+        if (Input.GetKeyDown(KeyCode.P))
+            GameManagerController.Instance.LoadNextLevel();
     }
 
     public void CommitCommand()
