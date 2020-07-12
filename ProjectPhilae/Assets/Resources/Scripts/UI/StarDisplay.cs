@@ -29,8 +29,11 @@ public class StarDisplay : MonoBehaviour
     void Update()
     {
         if (displayedStars < starCount && Time.time - lastTimeStep > timeStep)
-        {
+        {            
             displayedStars++;
+            var pitchIncrease = displayedStars / 5f;
+            AudioManagerController.Instance.PlaySound("Star", 0f, 1f + pitchIncrease);
+
             image.sizeDelta = new Vector2(displayedStars * 100f, 100f);
             lastTimeStep = Time.time;
 

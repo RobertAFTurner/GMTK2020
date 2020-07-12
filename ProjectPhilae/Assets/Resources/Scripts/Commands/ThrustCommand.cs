@@ -43,6 +43,7 @@ public class ThrustCommand : Command
     {
         if (State == CommandState.Pending)
         {
+            AudioManagerController.Instance.PlaySound("Thrust");
             State = CommandState.InProgress;
             startTime = Time.time;
         }
@@ -63,6 +64,7 @@ public class ThrustCommand : Command
 
             if (Time.time > startTime + Duration)
             {
+                AudioManagerController.Instance.StopSound("Thrust");
                 StopParticles(shipController);
                 State = CommandState.Done;
                 return true;

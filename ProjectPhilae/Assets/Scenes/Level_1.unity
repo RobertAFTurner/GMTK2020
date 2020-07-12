@@ -1680,8 +1680,43 @@ MonoBehaviour:
   sounds:
   - name: MainTheme
     clip: {fileID: 8300000, guid: 38541c2e1206ccc469f7bb0e985b60b3, type: 3}
-    volume: 1
+    volume: 0.606
     pitch: 1
+    loop: 1
+  - name: PickUp
+    clip: {fileID: 8300000, guid: 2daa0cb5d5380c0419f05cf22fb3752c, type: 3}
+    volume: 0.582
+    pitch: 1
+    loop: 0
+  - name: Execute
+    clip: {fileID: 8300000, guid: 6380355b0181ad74189f11e4404a760d, type: 3}
+    volume: 0.582
+    pitch: 1
+    loop: 0
+  - name: Star
+    clip: {fileID: 8300000, guid: ca3bb961d87314b428a6f8668811891e, type: 3}
+    volume: 0.582
+    pitch: 1
+    loop: 0
+  - name: KeyPress
+    clip: {fileID: 8300000, guid: 0addcf2d4139e4b42a75b8e42ce89d49, type: 3}
+    volume: 0.582
+    pitch: 1
+    loop: 0
+  - name: Abort
+    clip: {fileID: 8300000, guid: 6380355b0181ad74189f11e4404a760d, type: 3}
+    volume: 0.582
+    pitch: 1
+    loop: 0
+  - name: Thrust
+    clip: {fileID: 8300000, guid: 0559fff1e9fca44459ef85e47b312d26, type: 3}
+    volume: 0.582
+    pitch: 1
+    loop: 1
+  - name: Booster
+    clip: {fileID: 8300000, guid: 3c44eef05c3201f4d81bc63849ec3adf, type: 3}
+    volume: 0.582
+    pitch: 1.54
     loop: 1
 --- !u!4 &1477613918
 Transform:

@@ -8,6 +8,7 @@ public class WaypointGoalController : MonoBehaviour
     {
         if(other.gameObject.tag == "Ship")
         {
+            AudioManagerController.Instance.PlaySound("PickUp");
             IsCollected = true;
         }
     }

@@ -38,6 +38,7 @@ public class ReverseThrustCommand : Command
         {
             State = CommandState.InProgress;
             startTime = Time.time;
+            AudioManagerController.Instance.PlaySound("Booster");
         }
 
         if (State == CommandState.InProgress)
@@ -56,6 +57,7 @@ public class ReverseThrustCommand : Command
             {
                 StopParticles(shipController);
                 State = CommandState.Done;
+                AudioManagerController.Instance.StopSound("Booster");
                 return true;
             }
         }
