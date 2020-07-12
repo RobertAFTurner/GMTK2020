@@ -42,7 +42,7 @@ public class StarDisplay : MonoBehaviour
             if (displayedStars == 5)
             {
                 var cam = Camera.main;
-                var v = cam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, cam.nearClipPlane+10f));
+                var v = cam.ViewportToWorldPoint(new Vector3(0.3f, 0.5f, cam.nearClipPlane+10f));
 
                 starEffect = Instantiate(StarEffectPrefab, v, Quaternion.identity).GetComponent<ParticleSystem>();
                 starEffect.gameObject.SetActive(true);

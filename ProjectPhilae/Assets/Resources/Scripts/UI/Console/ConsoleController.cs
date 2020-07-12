@@ -80,7 +80,13 @@ public class ConsoleController : MonoBehaviour
             Remove();
 
         if (Input.GetKeyDown(KeyCode.Return))
-            Done();
+        {
+            if (GameManagerController.Instance.State == GameManagerController.GameStates.EnterInstructions)
+                Done();
+
+            if (GameManagerController.Instance.State == GameManagerController.GameStates.Win)
+                GameManagerController.Instance.LoadNextLevel();
+        }
 
         if (Input.GetKeyDown(KeyCode.T))
             AddThrust();
@@ -103,6 +109,9 @@ public class ConsoleController : MonoBehaviour
 
     public void Done()
     {
+        if (GameManagerController.Instance.State != GameManagerController.GameStates.EnterInstructions)
+            return;
+
         AudioManagerController.Instance.PlaySound("KeyPress");
         if (DraftCommand == null)
         {
@@ -119,6 +128,9 @@ public class ConsoleController : MonoBehaviour
 
     public void Remove()
     {
+        if (GameManagerController.Instance.State != GameManagerController.GameStates.EnterInstructions)
+            return;
+
         AudioManagerController.Instance.PlaySound("KeyPress");
         if (Commands.Count == 0)
         {
@@ -143,6 +155,9 @@ public class ConsoleController : MonoBehaviour
 
     public void Execute()
     {
+        if (GameManagerController.Instance.State != GameManagerController.GameStates.EnterInstructions)
+            return;
+
         if (Commands.Count == 0)
         {
             commandDisplay.SetUserPrompt("Press Execute after entering commands to upload them to the probe and launch.\r\n\r\nNo commands entered! Insert disks to add commands");
@@ -170,6 +185,9 @@ public class ConsoleController : MonoBehaviour
 
     public void Abort()
     {
+        if (GameManagerController.Instance.State != GameManagerController.GameStates.Executing)
+            return;
+
         AudioManagerController.Instance.PlaySound("Abort");
         ShipController.Instance.Stop();
         GameManagerController.Instance.LoadLevel(true);
@@ -177,6 +195,9 @@ public class ConsoleController : MonoBehaviour
 
     private void MoveSelection(int offset)
     {
+        if (GameManagerController.Instance.State != GameManagerController.GameStates.EnterInstructions)
+            return;
+
         if (Commands.Count == 0)
         {
             commandDisplay.SetUserPrompt("The UP/DOWN keys can be used so select and modify commands which have already been entered.\r\n\r\nNo commands entered! Insert disks to add commands");
@@ -210,6 +231,9 @@ public class ConsoleController : MonoBehaviour
 
     public void SetNewDraftCommand<T>(T draftCommand, GameObject configPrefab) where T : Command
     {
+        if (GameManagerController.Instance.State != GameManagerController.GameStates.EnterInstructions)
+            return;
+
         if (selectedCommandIndex.HasValue)
         {
             Commands.Insert(selectedCommandIndex.Value+1, draftCommand);
@@ -237,7 +261,7 @@ public class ConsoleController : MonoBehaviour
         DisplayConfigPanelUi(draftCommand, configPrefab);
     }
 
-    public void CloseDraftCommandNode(bool clearSelectedCommandIndex = true, bool discarding = false)
+    private void CloseDraftCommandNode(bool clearSelectedCommandIndex = true, bool discarding = false)
     {
         if (clearSelectedCommandIndex)
             selectedCommandIndex = null;
