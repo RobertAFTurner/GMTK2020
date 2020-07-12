@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class ConsoleController : MonoBehaviour
@@ -83,6 +84,8 @@ public class ConsoleController : MonoBehaviour
 
     public void Update()
     {
+        EventSystem.current.SetSelectedGameObject(null);
+        
         if (Input.GetKeyDown(KeyCode.DownArrow))
             Down();
 
@@ -252,6 +255,7 @@ public class ConsoleController : MonoBehaviour
 
     public void SetNewDraftCommand<T>(T draftCommand, GameObject configPrefab) where T : Command
     {
+        Debug.Log("New draft command");
         if (GameManagerController.Instance.State != GameManagerController.GameStates.EnterInstructions)
             return;
 
@@ -265,6 +269,8 @@ public class ConsoleController : MonoBehaviour
             Commands.Add(draftCommand);
             selectedCommandIndex = Commands.Count - 1;
         }
+
+        Debug.Log($"New draft command ended : {Commands.Count}");
 
         SetDraftCommand(draftCommand, configPrefab);
     }
