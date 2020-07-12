@@ -131,7 +131,7 @@ public class GameManagerController : Singleton<GameManagerController>
 
     public void LoadLevel(bool keepCommands = false)
     {
-        GUIManagerController.Instance.HideWinPanel();      
+        GUIManagerController.Instance.HideWinPanel();
         Debug.Log($"Load level, keep commands: {keepCommands}");
         if (keepCommands)
         {
