@@ -26,10 +26,28 @@ public class RotateCommand : Command
     private float targetAngle;
     //private float currentVelocity;
 
+    private void StartParticles(ShipController shipController)
+    {
+        if (Direction == AngularDirection.Clockwise && !shipController.rotateClockwiseSystem.isPlaying)
+            shipController.rotateClockwiseSystem.Play();
+
+        if (Direction == AngularDirection.Anticlockwise &&!shipController.rotateAnticlockwiseSystem.isPlaying)
+            shipController.rotateAnticlockwiseSystem.Play();
+    }
+
+    private void StopParticles(ShipController shipController)
+    {
+        if (shipController.rotateClockwiseSystem.isPlaying)
+            shipController.rotateClockwiseSystem.Stop();
+
+        if (shipController.rotateAnticlockwiseSystem.isPlaying)
+            shipController.rotateAnticlockwiseSystem.Stop();
+    }
+
     public override bool ExecuteTillDone(ShipController shipController)
     {
         if (State == CommandState.Pending)
-        {
+        {            
             State = CommandState.InProgress;
             startTime = Time.time;
             startAngle = shipController.GetRigidBody().rotation;
@@ -38,8 +56,11 @@ public class RotateCommand : Command
 
         if (State == CommandState.InProgress)
         {
+            StartParticles(shipController);
+            
             if (shipController.fuel <= 0)
             {
+                StopParticles(shipController);
                 State = CommandState.UnableToComplete;
                 return true;
             }
@@ -48,6 +69,7 @@ public class RotateCommand : Command
 
             if (Time.time > startTime + Duration)
             {
+                StopParticles(shipController);
                 State = CommandState.Done;
                 return true;
             }

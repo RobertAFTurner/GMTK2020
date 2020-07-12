@@ -14,6 +14,27 @@ public class ThrustCommand : Command
 
     public float Power;
 
+
+    private void StartParticles(ShipController shipController)
+    {
+        if (!shipController.thrustSystem.isPlaying)
+        {
+            var main = shipController.thrustSystem.main;
+            main.startSpeed = Power / 10;
+
+            var emmision = shipController.thrustSystem.emission;
+            emmision.rateOverTime = Power * 5;
+
+            shipController.thrustSystem.Play();
+        }
+    }
+
+    private void StopParticles(ShipController shipController)
+    {
+        if (shipController.thrustSystem.isPlaying)
+            shipController.thrustSystem.Stop();
+    }
+
     public override bool ExecuteTillDone(ShipController shipController)
     {
         if (State == CommandState.Pending)
@@ -24,20 +45,12 @@ public class ThrustCommand : Command
 
         if (State == CommandState.InProgress)
         {
-            if(!shipController.thrustSystem.isPlaying)
-            {
-                var main = shipController.thrustSystem.main;
-                main.startSpeed = Power / 10;
-
-                var emmision = shipController.thrustSystem.emission;
-                emmision.rateOverTime = Power * 5;
-
-                shipController.thrustSystem.Play();
-            } 
-                
+            
+             StartParticles(shipController);   
             
             if (shipController.fuel <= 0)
             {
+                StopParticles(shipController);
                 State = CommandState.UnableToComplete;
                 return true;
             }
@@ -46,9 +59,7 @@ public class ThrustCommand : Command
 
             if (Time.time > startTime + Duration)
             {
-                if (shipController.thrustSystem.isPlaying)
-                    shipController.thrustSystem.Stop();
-
+                StopParticles(shipController);
                 State = CommandState.Done;
                 return true;
             }

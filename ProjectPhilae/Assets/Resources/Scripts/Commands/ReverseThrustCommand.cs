@@ -14,6 +14,24 @@ public class ReverseThrustCommand : Command
 
     public float Power;
 
+    private void StartParticles(ShipController shipController)
+    {
+        if (!shipController.stopLeftSystem.isPlaying)
+            shipController.stopLeftSystem.Play();
+
+        if (!shipController.stopRightSystem.isPlaying)
+            shipController.stopRightSystem.Play(); 
+    }
+
+    private void StopParticles(ShipController shipController)
+    {
+        if (shipController.stopLeftSystem.isPlaying)
+            shipController.stopLeftSystem.Stop();
+
+        if (shipController.stopRightSystem.isPlaying)
+            shipController.stopRightSystem.Stop(); 
+    }
+
     public override bool ExecuteTillDone(ShipController shipController)
     {
         if (State == CommandState.Pending)
@@ -24,8 +42,10 @@ public class ReverseThrustCommand : Command
 
         if (State == CommandState.InProgress)
         {
+            StartParticles(shipController);
             if (shipController.fuel <= 0)
             {
+                StopParticles(shipController);
                 State = CommandState.UnableToComplete;
                 return true;
             }
@@ -34,6 +54,7 @@ public class ReverseThrustCommand : Command
             
             if (Time.time > startTime + Duration)
             {
+                StopParticles(shipController);
                 State = CommandState.Done;
                 return true;
             }
