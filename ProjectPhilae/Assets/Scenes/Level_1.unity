@@ -2167,6 +2167,11 @@ MonoBehaviour:
     volume: 0.582
     pitch: 1.2
     loop: 0
+  - name: DiskInsert
+    clip: {fileID: 8300000, guid: 31824ff337c019940ac0b76adbef56f7, type: 3}
+    volume: 0.582
+    pitch: 1.2
+    loop: 0
 --- !u!4 &1477613918
 Transform:
   m_ObjectHideFlags: 0

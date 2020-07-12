@@ -266,6 +266,7 @@ public class ConsoleController : MonoBehaviour
         if (clearSelectedCommandIndex)
             selectedCommandIndex = null;
 
+        AudioManagerController.Instance.PlaySound("DiskInsert");
         DraftCommand.State = CommandState.Pending;
         currentNodeInstance?.GetComponent<NodeBase>().DestroySelf(discarding);
         currentNodeInstance = null;
