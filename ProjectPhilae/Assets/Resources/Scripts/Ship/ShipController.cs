@@ -22,6 +22,9 @@ public class ShipController : SingletonDestructible<ShipController>
     [SerializeField]
     private Rigidbody2D shipRigidbody;
 
+    [SerializeField]
+    public ParticleSystem thrustSystem;
+
     private ShipState state;
 
     void Start()
