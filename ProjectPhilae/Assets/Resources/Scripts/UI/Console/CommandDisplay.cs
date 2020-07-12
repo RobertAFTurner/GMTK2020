@@ -12,6 +12,7 @@ public class CommandDisplay : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        ConsoleController = FindObjectOfType<ConsoleController>();
         text = this.GetComponent<TMPro.TextMeshProUGUI>();
     }
 

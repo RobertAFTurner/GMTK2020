@@ -11,6 +11,7 @@ public class StarDisplay : MonoBehaviour
     private float timeStep = 0.3f;
     private float lastTimeStep;
     private RectTransform image;
+    private Vector2 originalSize;
 
     public void DisplayStars(int stars)
     {
@@ -22,7 +23,8 @@ public class StarDisplay : MonoBehaviour
     void Start()
     {
         image = GetComponent<RectTransform>();
-        image.sizeDelta = new Vector2(0f, 100f);
+        originalSize = image.sizeDelta;
+        //image.sizeDelta = new Vector2(0f, 100f);
     }
 
     // Update is called once per frame
@@ -31,7 +33,7 @@ public class StarDisplay : MonoBehaviour
         if (displayedStars < starCount && Time.time - lastTimeStep > timeStep)
         {
             displayedStars++;
-            image.sizeDelta = new Vector2(displayedStars * 100f, 100f);
+            image.sizeDelta = new Vector2((displayedStars-1)*100f, originalSize.y);
             lastTimeStep = Time.time;
 
             if (displayedStars == 5)
